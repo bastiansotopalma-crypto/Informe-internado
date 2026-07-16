@@ -87,8 +87,27 @@ def set_pgnum(section, fmt=None, start=None):
     if fmt: pg.set(qn("w:fmt"), fmt)
     if start is not None: pg.set(qn("w:start"), str(start))
 
+_CAPS = [
+    ("atención primaria de salud", "Atención Primaria de Salud"),
+    ("Atención primaria de salud", "Atención Primaria de Salud"),
+    ("Atención Primaria de salud", "Atención Primaria de Salud"),
+    ("atención primaria", "Atención Primaria"),
+    ("Atención primaria", "Atención Primaria"),
+    ("atención farmacéutica", "Atención Farmacéutica"),
+    ("Atención farmacéutica", "Atención Farmacéutica"),
+    ("químicos farmacéuticos", "Químicos Farmacéuticos"),
+    ("Químicos farmacéuticos", "Químicos Farmacéuticos"),
+    ("químico farmacéutico", "Químico Farmacéutico"),
+    ("Químico farmacéutico", "Químico Farmacéutico"),
+]
+def cap_terms(t):
+    for a, b in _CAPS:
+        t = t.replace(a, b)
+    return t
+
 def para(text, bold=False, italic=False, size=None, align=WD_ALIGN_PARAGRAPH.JUSTIFY,
          space_after=None):
+    text = cap_terms(text)
     p = doc.add_paragraph()
     run = p.add_run(text); run.bold = bold; run.italic = italic
     run.font.name = FONT; run.font.size = Pt(size or 12)
@@ -97,6 +116,7 @@ def para(text, bold=False, italic=False, size=None, align=WD_ALIGN_PARAGRAPH.JUS
     return p
 
 def bullet(text, style="List Bullet"):
+    text = cap_terms(text)
     p = doc.add_paragraph(style=style)
     p.add_run(text)
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -108,7 +128,7 @@ def numbered(text):
     return bullet(text, style="List Number")
 
 def heading(text, level=1):
-    return doc.add_heading(text, level=level)
+    return doc.add_heading(cap_terms(text), level=level)
 
 def caption(label, text):
     p = doc.add_paragraph(style="Caption")
@@ -127,8 +147,8 @@ def defterm(term, definition):
     p = doc.add_paragraph()
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     p.paragraph_format.space_after = Pt(4); p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-    r = p.add_run(f"{term}: "); r.bold = True; r.font.name = FONT; r.font.size = Pt(12)
-    r2 = p.add_run(definition); r2.font.name = FONT; r2.font.size = Pt(12)
+    r = p.add_run(cap_terms(f"{term}: ")); r.bold = True; r.font.name = FONT; r.font.size = Pt(12)
+    r2 = p.add_run(cap_terms(definition)); r2.font.name = FONT; r2.font.size = Pt(12)
     return p
 
 def make_table(headers, rows, col_widths=None, font_size=10, header_fill="D9E2F3"):
@@ -146,7 +166,7 @@ def make_table(headers, rows, col_widths=None, font_size=10, header_fill="D9E2F3
         cells = t.add_row().cells
         for i, val in enumerate(row):
             cells[i].paragraphs[0].text = ""
-            run = cells[i].paragraphs[0].add_run(val)
+            run = cells[i].paragraphs[0].add_run(cap_terms(val))
             run.font.name = FONT; run.font.size = Pt(font_size)
             cells[i].paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.LEFT
             cells[i].paragraphs[0].paragraph_format.space_after = Pt(2)
@@ -217,7 +237,7 @@ abrev = [
     ("APS", "Atención Primaria de Salud"),
     ("CESFAM", "Centro de Salud Familiar"),
     ("CENABAST", "Central de Abastecimiento del Sistema Nacional de Servicios de Salud"),
-    ("CMO", "Capacidad, Motivación y Oportunidad (modelo de atención farmacéutica)"),
+    ("CMO", "Capacidad, Motivación y Oportunidad (modelo de Atención Farmacéutica)"),
     ("COSADES", "Corporación de Salud y Desarrollo Social"),
     ("DM2", "Diabetes Mellitus tipo 2"),
     ("DLP", "Dislipidemia"),
@@ -240,6 +260,31 @@ for a, d in abrev:
     r = p.add_run(f"{a}: "); r.bold = True; r.font.name = FONT; r.font.size = Pt(12)
     r2 = p.add_run(d); r2.font.name = FONT; r2.font.size = Pt(12)
 
+doc.add_page_break()
+heading("RESUMEN")
+para("El presente informe da cuenta del Internado en Farmacia Asistencial y Atención "
+     "Primaria de Salud realizado en la unidad de farmacia del CESFAM Villa Nonguén, "
+     "entre el 11 de mayo y el 10 de julio de 2026. Durante nueve semanas el interno se "
+     "integró al equipo de farmacia y participó en los procesos de recepción, "
+     "almacenamiento, gestión de stock, fraccionamiento, reenvasado y dispensación de "
+     "medicamentos, además de actividades de atención farmacéutica, visitas "
+     "domiciliarias y educación sanitaria orientadas al uso racional de los "
+     "medicamentos. En paralelo se desarrolló el seminario de título, consistente en el "
+     "diseño de un protocolo de atención farmacéutica domiciliaria basado en el Modelo "
+     "CMO para los pacientes del Programa de Salud Cardiovascular del centro. El informe "
+     "describe el establecimiento y su unidad de farmacia, detalla las actividades "
+     "realizadas mediante una carta Gantt y su descripción, presenta el desarrollo del "
+     "seminario de título y discute el cumplimiento de los objetivos a la luz de la "
+     "evidencia, junto con las fortalezas, debilidades y propuestas de mejora "
+     "identificadas durante la experiencia.")
+_pk = doc.add_paragraph(); _pk.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+_pk.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+_rk = _pk.add_run("Palabras clave: "); _rk.bold = True; _rk.font.name = FONT; _rk.font.size = Pt(12)
+_rk2 = _pk.add_run("atención farmacéutica; Atención Primaria de Salud; Modelo CMO; "
+                   "adherencia; uso racional de medicamentos.")
+_rk2.font.name = FONT; _rk2.font.size = Pt(12)
+_rk2.text = cap_terms(_rk2.text)
+
 # =====================================================================
 # SECCION 3: cuerpo (arabigos)
 # =====================================================================
@@ -255,9 +300,9 @@ para("El presente informe reúne la experiencia desarrollada durante el Internad
      "Concepción, Región del Biobío, entre el 11 de mayo y el 10 de julio de 2026. El "
      "internado corresponde a una actividad obligatoria del plan de estudios de la "
      "carrera de Química y Farmacia, cuyo propósito es que el estudiante adquiera "
-     "experiencia directa del quehacer profesional del químico farmacéutico en un "
+     "experiencia directa del quehacer profesional del Químico Farmacéutico en un "
      "establecimiento de ejercicio real, bajo la supervisión de un profesional del "
-     "área. La atención primaria constituye la puerta de entrada al sistema público de "
+     "área. La Atención Primaria constituye la puerta de entrada al sistema público de "
      "salud y, dentro de ella, la farmacia cumple un rol central en el acceso a los "
      "medicamentos y en el uso seguro y racional de la farmacoterapia por parte de la "
      "población (Ministerio de Salud de Chile, 2018b).")
@@ -300,7 +345,7 @@ caption("Tabla", "Dotación de personal del CESFAM Villa Nonguén según estamen
 make_table(["Estamento", "N.º", "Estamento", "N.º"], [
     ["Médico", "14", "Enfermera/o", "11"],
     ["Odontólogo", "7", "Matrona", "8"],
-    ["Químico farmacéutico", "3", "Kinesiólogo", "3"],
+    ["Químico Farmacéutico", "3", "Kinesiólogo", "3"],
     ["Nutricionista", "3", "Psicólogo", "6"],
     ["Trabajador social", "5", "Podólogo", "1"],
     ["Técnico en enfermería", "25", "Secretaria", "11"],
@@ -314,13 +359,13 @@ heading("1.2 Organigrama y distribución de la unidad de farmacia", level=2)
 para("La unidad de farmacia se organiza bajo la responsabilidad de un químico "
      "farmacéutico que ejerce la dirección técnica y responde por el funcionamiento "
      "general de la unidad, el cumplimiento normativo y la gestión del arsenal "
-     "farmacoterapéutico. Un segundo químico farmacéutico se dedica de manera "
-     "preferente a la atención farmacéutica, tanto en box como en las visitas "
+     "farmacoterapéutico. Un segundo Químico Farmacéutico se dedica de manera "
+     "preferente a la Atención Farmacéutica, tanto en box como en las visitas "
      "domiciliarias del Programa de Salud Cardiovascular, y un equipo permanente de "
      "cuatro técnicos en enfermería de nivel superior (TENS) apoya las tareas de "
      "recepción, almacenamiento, fraccionamiento, reenvasado y dispensación. El interno "
      "de Química y Farmacia se integró a este equipo durante toda la rotación. La "
-     "Figura 1 presenta el organigrama de la unidad, con los químicos farmacéuticos y "
+     "Figura 1 presenta el organigrama de la unidad, con los Químicos Farmacéuticos y "
      "los técnicos que componen el equipo.")
 add_image("fig_organigrama.png", 15.0)
 caption("Figura", "Organigrama de la unidad de farmacia del CESFAM Villa Nonguén.")
@@ -339,8 +384,8 @@ para("El CESFAM Villa Nonguén entrega una atención integral y continua a lo la
 para("La unidad de farmacia participa de manera transversal en estos programas a "
      "través de la entrega de medicamentos, el fraccionamiento y reenvasado según las "
      "indicaciones, el control del arsenal y de los medicamentos sujetos a control "
-     "legal, y la atención farmacéutica orientada al uso seguro y racional de la "
-     "terapia. Dentro del Programa de Salud Cardiovascular, el químico farmacéutico "
+     "legal, y la Atención Farmacéutica orientada al uso seguro y racional de la "
+     "terapia. Dentro del Programa de Salud Cardiovascular, el Químico Farmacéutico "
      "acompaña a los usuarios en box y en su domicilio, con seguimiento "
      "farmacoterapéutico, educación y revisión de la medicación, y participa en la "
      "gestión del Fondo de Farmacia (FOFAR), que financia su presencia en la atención "
@@ -348,7 +393,7 @@ para("La unidad de farmacia participa de manera transversal en estos programas a
      "dislipidemia (Ministerio de Salud de Chile, 2020).")
 
 heading("1.4 Marco teórico", level=2)
-para("La atención farmacéutica se entiende hoy como la participación del farmacéutico "
+para("La Atención Farmacéutica se entiende hoy como la participación del farmacéutico "
      "en el cuidado de la persona para aprovechar mejor sus medicamentos y mejorar sus "
      "resultados en salud. Bonal y colaboradores la describen como el proceso por el "
      "cual el farmacéutico coopera con el paciente y con el resto del equipo en el "
@@ -356,7 +401,7 @@ para("La atención farmacéutica se entiende hoy como la participación del farm
      "concretas (Bonal et al., 2003). Este enfoque supone un cambio respecto del modelo "
      "clásico, centrado en entregar el medicamento, hacia otro que se preocupa de lo "
      "que ocurre con ese medicamento una vez que el paciente lo lleva a su casa.")
-para("En la atención primaria chilena, la incorporación del químico farmacéutico a "
+para("En la Atención Primaria chilena, la incorporación del Químico Farmacéutico a "
      "los equipos ha permitido acercar esta labor a la comunidad, con especial "
      "relevancia en las enfermedades crónicas. La Encuesta Nacional de Salud estimó que "
      "cerca del 27,6% de la población tiene sospecha de hipertensión, un 12,3% diabetes "
@@ -411,8 +456,8 @@ defterm("Resultados negativos asociados a la medicación (RNM)", "resultados en 
 
 heading("1.6 Objetivos", level=2)
 heading("1.6.1 Objetivo general", level=3)
-para("Desarrollar las competencias profesionales del químico farmacéutico en el "
-     "ámbito de la farmacia asistencial y la atención primaria de salud durante el "
+para("Desarrollar las competencias profesionales del Químico Farmacéutico en el "
+     "ámbito de la farmacia asistencial y la Atención Primaria de Salud durante el "
      "internado en el CESFAM Villa Nonguén.")
 heading("1.6.2 Objetivos específicos", level=3)
 numbered("Reconocer la estructura organizacional y las funciones del equipo de la "
@@ -420,9 +465,9 @@ numbered("Reconocer la estructura organizacional y las funciones del equipo de l
 numbered("Participar en los procesos técnicos de recepción, almacenamiento, "
          "fraccionamiento, reenvasado y dispensación de medicamentos de la unidad de "
          "farmacia.")
-numbered("Ejecutar actividades de atención farmacéutica, visitas domiciliarias y "
+numbered("Ejecutar actividades de Atención Farmacéutica, visitas domiciliarias y "
          "educación sanitaria orientadas al uso racional de los medicamentos.")
-numbered("Diseñar un protocolo de atención farmacéutica domiciliaria basado en el "
+numbered("Diseñar un protocolo de Atención Farmacéutica domiciliaria basado en el "
          "Modelo CMO para el Programa de Salud Cardiovascular del CESFAM Villa Nonguén.")
 para("Cada uno de estos objetivos se desarrolla de forma explícita en el informe: los "
      "tres primeros a través de las actividades descritas en la sección 2.3, y el "
@@ -441,12 +486,12 @@ acts_list = [
     "Fraccionamiento y reenvasado de medicamentos.",
     "Dispensación informada de medicamentos.",
     "Control de indicadores y registros de despacho.",
-    "Atención farmacéutica y visitas domiciliarias.",
+    "Atención Farmacéutica y visitas domiciliarias.",
     "Educación sanitaria y promoción del uso racional de medicamentos.",
     "Inventario y ordenamiento de bodega.",
     "Apoyo en las supervisiones del Servicio de Salud.",
     "Vinculación con el medio.",
-    "Seminario de título: diseño de un protocolo de atención farmacéutica domiciliaria.",
+    "Seminario de título: diseño de un protocolo de Atención Farmacéutica domiciliaria.",
 ]
 for a in acts_list:
     numbered(a)
@@ -463,7 +508,7 @@ heading("2.2 Cronograma de actividades desarrolladas", level=2)
 para("La Figura 3 muestra las actividades efectivamente desarrolladas, con detalle por "
      "día y por semana. En términos generales, la ejecución siguió lo planificado, con "
      "algunos ajustes propios de la dinámica del establecimiento. El fraccionamiento, "
-     "la dispensación y la atención farmacéutica se extendieron durante casi todo el "
+     "la dispensación y la Atención Farmacéutica se extendieron durante casi todo el "
      "periodo, ya que constituyen tareas habituales de la unidad, y se sumaron "
      "actividades no previstas al inicio, como el apoyo durante las supervisiones del "
      "Servicio de Salud y una situación de vinculación con el medio surgida en terreno. "
@@ -478,7 +523,7 @@ make_table(
         ["S1\n11-15 may", "Inducción y recorrido de la unidad",
          "Fraccionamiento y reenvasado; cambio de vildagliptina",
          "Control de vencimientos; indicador de despacho por sector",
-         "Envasado; protocolos de emergencia; llegada de pedido; atención farmacéutica",
+         "Envasado; protocolos de emergencia; llegada de pedido; Atención Farmacéutica",
          "Seminario: revisión bibliográfica y Modelo CMO"],
         ["S2\n18-22 may", "Protocolo de AF y entrega a domicilio",
          "Seminario: objetivos; bolsas y pedido", "Fraccionamiento y reenvasado",
@@ -490,14 +535,14 @@ make_table(
         ["S4\n01-05 jun", "Préstamos por vencimiento", "Plantilla de despacho de mayo",
          "Gestión de stock y reportes",
          "Supervisión del Servicio de Salud; inducción; metodología del seminario",
-         "Indicador y atención farmacéutica"],
+         "Indicador y Atención Farmacéutica"],
         ["S5\n08-12 jun", "Rutina de farmacia y dispensación",
          "Inventario y ordenamiento de bodega",
          "Inspección del Servicio de Salud; avance del seminario",
          "Fraccionamiento y dispensación", "Bolsas fraccionadas; visita domiciliaria"],
         ["S6\n15-19 jun", "Llega docente supervisora; envío del avance",
          "Despacho a domicilio y farmacia", "Despacho a domicilio y farmacia",
-         "Despacho a domicilio y farmacia", "Atención farmacéutica"],
+         "Despacho a domicilio y farmacia", "Atención Farmacéutica"],
         ["S7\n22-26 jun", "Tareas generales de farmacia", "Tareas generales de farmacia",
          "Fraccionamiento y farmacia", "Tareas generales de farmacia",
          "Taller de uso racional de medicamentos"],
@@ -506,7 +551,7 @@ make_table(
          "Avance del seminario"],
         ["S9\n06-10 jul", "Entrega a domicilio", "Entrega a domicilio",
          "Entrega a domicilio", "Farmacia y fraccionamiento",
-         "Atención farmacéutica con Q.F. especialista"],
+         "Atención Farmacéutica con Q.F. especialista"],
     ],
     col_widths=[2.0, 2.6, 2.6, 2.6, 2.6, 2.6], font_size=8)
 para("Respecto de las actividades no realizadas, la participación en el Comité de "
@@ -566,9 +611,9 @@ para("Se apoyó la dispensación de medicamentos a los usuarios, con lo que se "
      "conocieron los criterios de manejo de los medicamentos sujetos a control legal y "
      "la forma de registrar su entrega. Responde al segundo objetivo específico.")
 
-heading("2.3.5 Atención farmacéutica y visitas domiciliarias", level=3)
-para("La atención farmacéutica fue una de las actividades más significativas del "
-     "internado. Se acompañó al químico farmacéutico en la atención de los usuarios del "
+heading("2.3.5 Atención Farmacéutica y visitas domiciliarias", level=3)
+para("La Atención Farmacéutica fue una de las actividades más significativas del "
+     "internado. Se acompañó al Químico Farmacéutico en la atención de los usuarios del "
      "Programa de Salud Cardiovascular, tanto en box como en el domicilio, y se "
      "participó en la entrega de medicamentos a domicilio para pacientes con "
      "dificultades para acudir al centro. En estas visitas se revisaba la medicación "
@@ -580,7 +625,7 @@ para("La atención farmacéutica fue una de las actividades más significativas 
 
 heading("2.3.6 Educación sanitaria y promoción del uso racional de medicamentos", level=3)
 para("Se participó en un taller grupal de uso racional de medicamentos dirigido a los "
-     "usuarios del CESFAM. La actividad se realizó junto al químico farmacéutico y "
+     "usuarios del CESFAM. La actividad se realizó junto al Químico Farmacéutico y "
      "consistió en conversar con los pacientes, entregar material educativo en forma de "
      "trípticos y desarrollar una dinámica participativa con paletas de respuesta, en "
      "la que los asistentes respondían situaciones sobre el uso correcto de los "
@@ -591,7 +636,7 @@ para("Se participó en un taller grupal de uso racional de medicamentos dirigido
 heading("2.3.7 Control de indicadores, inventario y supervisiones", level=3)
 para("Se colaboró en el registro y el control de los indicadores de la unidad. Entre "
      "ellos, se trabajó en el indicador de porcentaje de despacho de medicamentos "
-     "realizado según el protocolo de atención farmacéutica, desagregado por sector, y "
+     "realizado según el protocolo de Atención Farmacéutica, desagregado por sector, y "
      "se completó la plantilla mensual de despacho correspondiente al mes de mayo. "
      "También se participó en las tareas de inventario y en el ordenamiento de la "
      "bodega, cuidando que las existencias quedaran correctamente ubicadas y que no "
@@ -601,21 +646,21 @@ para("Se colaboró en el registro y el control de los indicadores de la unidad. 
      "unidad de farmacia y la relevancia de mantener los registros al día. Además, en "
      "una salida a terreno se prestó apoyo a un adulto mayor para regresar a su hogar, "
      "situación que reflejó el componente humano y comunitario del trabajo en la "
-     "atención primaria.")
+     "Atención Primaria.")
 
 heading("2.4 Seminario de título", level=2)
 para("El seminario de título se desarrolló en paralelo a las actividades de farmacia y "
      "corresponde al cuarto objetivo específico del internado. Consistió en el diseño "
-     "de un protocolo de atención farmacéutica domiciliaria basado en el Modelo CMO "
+     "de un protocolo de Atención Farmacéutica domiciliaria basado en el Modelo CMO "
      "para los pacientes del Programa de Salud Cardiovascular del CESFAM Villa Nonguén, "
      "bajo la guía del profesor Diego Ignacio Jorquera Pereira y con el apoyo del "
-     "químico farmacéutico tutor del centro. A continuación se describe cómo se realizó.")
+     "Químico Farmacéutico tutor del centro. A continuación se describe cómo se realizó.")
 
 heading("2.4.1 Objetivos del seminario", level=3)
 para("El objetivo general del seminario fue diseñar un protocolo de atención "
      "farmacéutica domiciliaria basado en el Modelo CMO para los pacientes del Programa "
      "de Salud Cardiovascular del CESFAM Villa Nonguén. Para alcanzarlo se plantearon "
-     "tres objetivos específicos: diagnosticar las brechas del programa de visitas "
+     "tres objetivos específicos: identificar las brechas del programa de visitas "
      "domiciliarias que se realizaba en el centro; definir el flujograma de la visita y "
      "los criterios para priorizar a los pacientes según los pilares del Modelo CMO; y "
      "diseñar los instrumentos y herramientas clínicas necesarias para aplicar el "
@@ -627,7 +672,7 @@ para("El seminario correspondió a un trabajo de desarrollo metodológico. No se
      "un experimento ni se recogieron datos clínicos de pacientes con fines de "
      "investigación, sino que se diseñó un protocolo a partir de la revisión de la "
      "literatura, del análisis de la normativa del Ministerio de Salud y de la "
-     "adaptación de herramientas ya utilizadas en la atención primaria, ajustadas a lo "
+     "adaptación de herramientas ya utilizadas en la Atención Primaria, ajustadas a lo "
      "observado en el propio centro. El trabajo se desarrolló durante los meses del "
      "internado, en el CESFAM Villa Nonguén y su territorio. La revisión bibliográfica "
      "se realizó en bases de datos como PubMed, SciELO y Google Scholar, junto con la "
@@ -661,7 +706,7 @@ make_table(
          "La educación y el trabajo de barreras dependen de cada visita."],
         ["Oportunidad", "Registro estructurado y continuidad del seguimiento.",
          "Registro en la ficha clínica (SINET Sur) y en hojas de apoyo personales.",
-         "Falta un instrumento de registro propio de la atención farmacéutica."],
+         "Falta un instrumento de registro propio de la Atención Farmacéutica."],
     ],
     col_widths=[3.0, 4.0, 4.0, 4.0], font_size=9)
 
@@ -690,16 +735,16 @@ heading("3. DISCUSIÓN Y CONCLUSIONES")
 
 heading("3.1 Alcances y cumplimiento de los objetivos", level=2)
 para("El internado permitió conocer de manera directa el funcionamiento de una unidad "
-     "de farmacia de atención primaria y participar en la mayoría de sus procesos, "
-     "desde la gestión del arsenal hasta la atención farmacéutica en el domicilio. El "
+     "de farmacia de Atención Primaria y participar en la mayoría de sus procesos, "
+     "desde la gestión del arsenal hasta la Atención Farmacéutica en el domicilio. El "
      "primer objetivo específico se cumplió al reconocer la estructura, las funciones "
      "del equipo y los procesos de la unidad, tal como se describe en la sección 1 y en "
      "el organigrama. El segundo se alcanzó mediante la participación sostenida en la "
      "recepción, el almacenamiento, la gestión de stock, el fraccionamiento, el "
      "reenvasado y la dispensación, resguardando la trazabilidad a través del rotulado. "
-     "El tercero se desarrolló a través de la atención farmacéutica, las visitas "
+     "El tercero se desarrolló a través de la Atención Farmacéutica, las visitas "
      "domiciliarias y el taller de uso racional de medicamentos. Y el cuarto se "
-     "materializó en el diseño del protocolo de atención farmacéutica domiciliaria "
+     "materializó en el diseño del protocolo de Atención Farmacéutica domiciliaria "
      "basado en el Modelo CMO, presentado como seminario de título. En conjunto, estas "
      "actividades permitieron cumplir el objetivo general del internado.")
 para("Los resultados observados en terreno concuerdan con lo descrito en la literatura "
@@ -723,7 +768,7 @@ para("Los resultados observados en terreno concuerdan con lo descrito en la lite
 heading("3.2 Fortalezas y debilidades del centro", level=2)
 para("Entre las fortalezas del CESFAM Villa Nonguén destacan su condición de centro "
      "pionero en el Modelo de Salud Familiar, un equipo de farmacia consolidado que ya "
-     "realiza atención farmacéutica en box y en el domicilio, y una cultura de trabajo "
+     "realiza Atención Farmacéutica en box y en el domicilio, y una cultura de trabajo "
      "orientada a la comunidad. La sectorización del territorio y la existencia de "
      "indicadores de despacho facilitan la organización de la atención y el uso "
      "eficiente de los recursos. Como aspecto por mejorar, se observó que la visita "
@@ -734,10 +779,10 @@ para("Entre las fortalezas del CESFAM Villa Nonguén destacan su condición de c
      "también limitaban la frecuencia de las visitas.")
 
 heading("3.3 Sugerencias y propuestas de mejora", level=2)
-numbered("Incorporar de manera formal el protocolo de atención farmacéutica "
+numbered("Incorporar de manera formal el protocolo de Atención Farmacéutica "
          "domiciliaria basado en el Modelo CMO, con criterios de priorización propios "
          "del farmacéutico, para ordenar el ingreso de los pacientes al seguimiento.")
-numbered("Estandarizar el registro de la atención farmacéutica mediante fichas de "
+numbered("Estandarizar el registro de la Atención Farmacéutica mediante fichas de "
          "conciliación y de seguimiento comunes, que luego se traspasen a la ficha "
          "clínica electrónica, para mejorar la trazabilidad y la continuidad.")
 numbered("Reforzar el trabajo de la adherencia con herramientas simples y validadas, "
@@ -747,20 +792,20 @@ numbered("Aprovechar la continuidad telefónica y las instancias educativas grup
 
 heading("3.4 Conclusiones", level=2)
 numbered("El internado en el CESFAM Villa Nonguén permitió desarrollar las "
-         "competencias del químico farmacéutico en el ámbito de la farmacia asistencial "
-         "y la atención primaria, cumpliendo el objetivo general planteado.")
+         "competencias del Químico Farmacéutico en el ámbito de la farmacia asistencial "
+         "y la Atención Primaria, cumpliendo el objetivo general planteado.")
 numbered("Se reconocieron la estructura y los procesos de la unidad de farmacia, y se "
          "participó en las tareas de recepción, almacenamiento, gestión de stock, "
          "fraccionamiento, reenvasado y dispensación, resguardando la trazabilidad y el "
          "uso eficiente de los recursos.")
-numbered("Se ejecutaron actividades de atención farmacéutica, visitas domiciliarias y "
+numbered("Se ejecutaron actividades de Atención Farmacéutica, visitas domiciliarias y "
          "promoción del uso racional de los medicamentos, lo que evidenció el aporte "
          "clínico y comunitario del farmacéutico en este nivel de atención.")
-numbered("Se diseñó, como seminario de título, un protocolo de atención farmacéutica "
+numbered("Se diseñó, como seminario de título, un protocolo de Atención Farmacéutica "
          "domiciliaria basado en el Modelo CMO, que aporta una herramienta concreta "
          "para ordenar, estandarizar y hacer trazable la visita domiciliaria en el "
          "establecimiento.")
-numbered("La experiencia confirmó la relevancia de la atención primaria como puerta de "
+numbered("La experiencia confirmó la relevancia de la Atención Primaria como puerta de "
          "entrada al sistema de salud y el valor de un ejercicio profesional basado en "
          "la evidencia, la seguridad del paciente y el trabajo en equipo.")
 
@@ -772,10 +817,10 @@ refs = [
     "ONE, 19(11), e0313101.",
     "Álvarez-Díaz, A. M., Morillo-Verdugo, R., & Fernández-Llamazares, C. M. (2025). "
     "Estudio cualitativo sobre la adopción y potenciación del modelo "
-    "capacidad-motivación-oportunidad para la atención farmacéutica en consultas "
+    "capacidad-motivación-oportunidad para la Atención Farmacéutica en consultas "
     "externas de farmacia en España. Farmacia Hospitalaria, 49(6), 384-391.",
     "Bonal, J., Alerany, C., Bassons, T., & Gascón, P. (2003). Farmacia clínica y "
-    "atención farmacéutica. Sociedad Española de Farmacia Hospitalaria.",
+    "Atención Farmacéutica. Sociedad Española de Farmacia Hospitalaria.",
     "Calleja Hernández, M. Á., & Morillo Verdugo, R. (Eds.). (2016). El modelo CMO en "
     "consultas externas de farmacia hospitalaria. Sociedad Española de Farmacia "
     "Hospitalaria.",
@@ -795,9 +840,9 @@ refs = [
     "paradigmas de la salud pública. https://www.diarioconcepcion.cl",
     "Espinosa García, J., Prados Torres, J. D., Leiva Fernández, F., & Barnestein "
     "Fonseca, P. (2023). Adherencia terapéutica de los pacientes con riesgo "
-    "cardiovascular en atención primaria. Proyecto REAAP. Medicina de Familia. "
+    "cardiovascular en Atención Primaria. Proyecto REAAP. Medicina de Familia. "
     "SEMERGEN, 49(6), 102016.",
-    "Faúndez Navarrete, P. A. (2020). Evaluación del programa de atención farmacéutica "
+    "Faúndez Navarrete, P. A. (2020). Evaluación del programa de Atención Farmacéutica "
     "del CESFAM Villa Nonguén [Memoria de título, Universidad de Concepción].",
     "Haynes, R. B., Taylor, D. W., & Sackett, D. L. (1979). Compliance in health care. "
     "Johns Hopkins University Press.",
@@ -807,7 +852,7 @@ refs = [
     "with diabetic kidney disease: The randomized PANDIA-IRIS study. Frontiers in "
     "Pharmacology, 15, 1294436.",
     "Manzano García, M., & Morillo Verdugo, R. (2018). Aprendizaje y aplicación del "
-    "modelo de atención farmacéutica CMO para residentes de farmacia hospitalaria. "
+    "modelo de Atención Farmacéutica CMO para residentes de farmacia hospitalaria. "
     "Sociedad Española de Farmacia Hospitalaria.",
     "Martín Alfonso, L. (2004). Acerca del concepto de adherencia terapéutica. Revista "
     "Cubana de Salud Pública, 30(4).",
@@ -815,7 +860,7 @@ refs = [
     "Gobierno de Chile.",
     "Ministerio de Salud de Chile. (2017b). Orientación técnica Programa de Salud "
     "Cardiovascular. Gobierno de Chile.",
-    "Ministerio de Salud de Chile. (2018a). Guía de atención farmacéutica y seguimiento "
+    "Ministerio de Salud de Chile. (2018a). Guía de Atención Farmacéutica y seguimiento "
     "farmacoterapéutico en APS. Gobierno de Chile.",
     "Ministerio de Salud de Chile. (2018b). Orientación técnica Fondo de Farmacia. "
     "Gobierno de Chile.",
@@ -839,12 +884,12 @@ for r in sorted(refs, key=lambda s: s.lower()):
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     p.paragraph_format.space_after = Pt(8)
     p.paragraph_format.left_indent = Cm(1); p.paragraph_format.first_line_indent = Cm(-1)
-    run = p.add_run(r); run.font.name = FONT; run.font.size = Pt(12)
+    run = p.add_run(cap_terms(r)); run.font.name = FONT; run.font.size = Pt(12)
 
 # --------------------------------------------------------------- ANEXOS
 heading("ANEXOS")
 para("Los anexos reúnen los principales instrumentos de apoyo diseñados para el "
-     "protocolo de atención farmacéutica domiciliaria del seminario de título. Son "
+     "protocolo de Atención Farmacéutica domiciliaria del seminario de título. Son "
      "formatos de trabajo pensados para usarse durante la visita y el seguimiento en el "
      "CESFAM, y pueden ajustarse a los registros propios del establecimiento.")
 
