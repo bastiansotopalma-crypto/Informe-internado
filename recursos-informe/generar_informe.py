@@ -170,9 +170,9 @@ def centered(text, size=12, bold=False, italic=False, space_after=6, space_befor
 # =====================================================================
 # PORTADA
 # =====================================================================
-centered("[Insertar logo institucional actualizado de la USS]", size=11, italic=True,
-         space_after=16, space_before=6)
-centered("UNIVERSIDAD SAN SEBASTIÁN", size=14, bold=True)
+_logo_p = doc.add_paragraph(); _logo_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+_logo_p.paragraph_format.space_before = Pt(6); _logo_p.paragraph_format.space_after = Pt(18)
+_logo_p.add_run().add_picture(f"{FIG}/logo_uss.jpeg", width=Cm(7.5))
 centered("FACULTAD DE CIENCIAS", size=14, bold=True)
 centered("ESCUELA DE QUÍMICA Y FARMACIA", size=14, bold=True)
 centered("SEDE CONCEPCIÓN", size=14, bold=True, space_after=54)
