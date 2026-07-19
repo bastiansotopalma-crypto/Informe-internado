@@ -143,6 +143,27 @@ def add_image(name, width_cm):
     p.add_run().add_picture(f"{FIG}/{name}", width=Cm(width_cm))
     return p
 
+def gantt_placeholder(fname):
+    """Recuadro con espacio reservado para que el usuario inserte la Carta Gantt
+    manualmente (el usuario pidió no integrarla al Word)."""
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p.paragraph_format.space_before = Pt(18); p.paragraph_format.space_after = Pt(6)
+    pPr = p._p.get_or_add_pPr()
+    pbdr = OxmlElement("w:pBdr")
+    for edge in ("top", "bottom", "left", "right"):
+        e = OxmlElement("w:" + edge)
+        e.set(qn("w:val"), "dashed"); e.set(qn("w:sz"), "6")
+        e.set(qn("w:space"), "16"); e.set(qn("w:color"), "1F3B5C")
+        pbdr.append(e)
+    pPr.append(pbdr)
+    r = p.add_run("[ Espacio reservado para insertar aquí la Carta Gantt ]")
+    r.italic = True; r.font.name = FONT; r.font.size = Pt(11); r.font.color.rgb = NAVY
+    for _ in range(6):
+        r.add_break()
+    r2 = p.add_run("Archivo %s.png (alta resolución) o %s.pdf (vectorial)" % (fname, fname))
+    r2.italic = True; r2.font.name = FONT; r2.font.size = Pt(10); r2.font.color.rgb = NAVY
+    return p
+
 def defterm(term, definition):
     p = doc.add_paragraph()
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
@@ -190,14 +211,31 @@ def centered(text, size=12, bold=False, italic=False, space_after=6, space_befor
 # =====================================================================
 # PORTADA
 # =====================================================================
-_logo_p = doc.add_paragraph(); _logo_p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-_logo_p.paragraph_format.space_before = Pt(6); _logo_p.paragraph_format.space_after = Pt(18)
-_logo_p.add_run().add_picture(f"{FIG}/logo_uss.jpeg", width=Cm(7.5))
-centered("FACULTAD DE CIENCIAS", size=14, bold=True)
-centered("ESCUELA DE QUÍMICA Y FARMACIA", size=14, bold=True)
-centered("SEDE CONCEPCIÓN", size=14, bold=True, space_after=54)
+# Logo institucional en el encabezado de la PRIMERA pagina (solo portada),
+# tal como en la memoria de titulo.
+_sec0 = doc.sections[0]
+_sec0.different_first_page_header_footer = True
+_sec0.header_distance = Cm(1.25)
+_fph = _sec0.first_page_header
+_fph.is_linked_to_previous = False
+_hp = _fph.paragraphs[0]; _hp.alignment = WD_ALIGN_PARAGRAPH.LEFT
+_hp.add_run().add_picture(f"{FIG}/logo_uss.jpeg", width=Cm(5.4))
+_sec0.header.paragraphs[0].text = ""   # encabezado vacio en el resto de paginas
+
+# FACULTAD / ESCUELA / SEDE alineados a la izquierda (Arial 14), no centrados
+def _left(text, size=14, bold=True, space_after=4, space_before=0):
+    p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+    p.paragraph_format.space_after = Pt(space_after)
+    p.paragraph_format.space_before = Pt(space_before)
+    r = p.add_run(text); r.bold = bold; r.font.name = FONT; r.font.size = Pt(size)
+    return p
+
+_left("FACULTAD DE CIENCIAS", space_before=10)
+_left("ESCUELA DE QUÍMICA Y FARMACIA")
+_left("SEDE CONCEPCIÓN")
 centered("Informe de Internado en Farmacia Asistencial y Atención Primaria de Salud",
-         size=13, bold=True, space_after=48)
+         size=14, bold=True, space_after=54, space_before=120)
 centered("Lugar de Internado", size=12, space_after=2)
 centered("Centro de Salud Familiar Villa Nonguén, Concepción", size=13, bold=True,
          space_after=44)
@@ -216,7 +254,7 @@ doc.add_section(WD_SECTION.NEW_PAGE)
 sec1 = doc.sections[1]; set_margins(sec1)
 doc.sections[0].footer.is_linked_to_previous = False
 doc.sections[0].footer.paragraphs[0].text = ""
-footer_page_number(sec1); set_pgnum(sec1, fmt="lowerRoman", start=2)
+footer_page_number(sec1); set_pgnum(sec1, fmt="lowerRoman", start=1)
 
 heading("TABLA DE CONTENIDOS")
 p = doc.add_paragraph()
@@ -490,6 +528,8 @@ acts_list = [
     "Educación sanitaria y promoción del uso racional de medicamentos.",
     "Inventario y ordenamiento de bodega.",
     "Apoyo en las supervisiones del Servicio de Salud.",
+    "Conocimiento del arsenal farmacoterapéutico, los programas ministeriales (GES) y "
+    "las fuentes de información de medicamentos.",
     "Vinculación con el medio.",
     "Seminario de título: diseño de un protocolo de Atención Farmacéutica domiciliaria.",
 ]
@@ -501,7 +541,7 @@ para("Al inicio del internado se acordó con el equipo de farmacia un plan de tr
      "que ordenó la rotación por las distintas tareas de la unidad y reservó tiempo "
      "para el desarrollo del seminario de título. La Figura 2 presenta la carta Gantt "
      "con las actividades planificadas a lo largo de las nueve semanas.")
-add_image("fig_gantt_planificada.png", 15.5)
+gantt_placeholder("fig_gantt_planificada")
 caption("Figura", "Carta Gantt de actividades planificadas del internado.")
 
 heading("2.2 Cronograma de actividades desarrolladas", level=2)
@@ -513,7 +553,7 @@ para("La Figura 3 muestra las actividades efectivamente desarrolladas, con detal
      "actividades no previstas al inicio, como el apoyo durante las supervisiones del "
      "Servicio de Salud y una situación de vinculación con el medio surgida en terreno. "
      "La Tabla 3 complementa la figura con el detalle diario de lo realizado.")
-add_image("fig_gantt_desarrollada.png", 15.0)
+gantt_placeholder("fig_gantt_desarrollada")
 caption("Figura", "Carta Gantt de actividades desarrolladas, con detalle por día y semana.")
 
 caption("Tabla", "Cronograma detallado de actividades por día y semana.")
@@ -647,6 +687,25 @@ para("Se colaboró en el registro y el control de los indicadores de la unidad. 
      "una salida a terreno se prestó apoyo a un adulto mayor para regresar a su hogar, "
      "situación que reflejó el componente humano y comunitario del trabajo en la "
      "Atención Primaria.")
+
+heading("2.3.8 Arsenal farmacoterapéutico, programas ministeriales y fuentes de información", level=3)
+para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la unidad, "
+     "es decir, el listado de medicamentos disponibles en el CESFAM según la canasta de "
+     "la Atención Primaria y las orientaciones del Ministerio de Salud, junto con los "
+     "criterios que definen qué medicamentos se incorporan o se retiran, como ocurrió "
+     "con el reemplazo de la vildagliptina por otra alternativa dentro del mismo grupo. "
+     "También se conoció el manejo de los medicamentos sujetos a control legal, con su "
+     "registro y custodia diferenciados, y el circuito de notificación de "
+     "farmacovigilancia frente a una sospecha de reacción adversa, aunque durante la "
+     "estadía no se presentó un caso que ameritara notificar. Buena parte del trabajo "
+     "de la unidad se articula con los programas ministeriales y las patologías con "
+     "Garantías Explícitas en Salud (GES), como la epilepsia y la tuberculosis, cuyos "
+     "tratamientos se dispensan y controlan de acuerdo con cada programa. Para resolver "
+     "dudas sobre los medicamentos y apoyar la Atención Farmacéutica con evidencia, se "
+     "recurrió a fuentes de información confiables y actualizadas, entre ellas UpToDate, "
+     "Medscape y Drugs.com, además de la normativa y las guías del Ministerio de Salud. "
+     "Esta actividad aporta al segundo y al tercer objetivo específico, ya que combina "
+     "la gestión del arsenal con el uso seguro y racional de los medicamentos.")
 
 heading("2.4 Seminario de título", level=2)
 para("El seminario de título se desarrolló en paralelo a las actividades de farmacia y "

@@ -94,7 +94,7 @@ plt.close()
 # =====================================================================
 def gantt_semanal(activities, filename, title, color):
     weeks = [f"S{i+1}" for i in range(9)]
-    fig, ax = plt.subplots(figsize=(13, 7))
+    fig, ax = plt.subplots(figsize=(15, 8.5))
     n = len(activities)
     for i, (name, spans) in enumerate(activities):
         y = n - i - 1
@@ -104,20 +104,21 @@ def gantt_semanal(activities, filename, title, color):
             ax.barh(y, end - start + 1, left=start - 1, height=0.55, color=color,
                     edgecolor=NAVY, linewidth=0.9, zorder=3, alpha=0.92)
     ax.set_yticks(range(n))
-    ax.set_yticklabels([a[0] for a in reversed(activities)], fontsize=10.5)
+    ax.set_yticklabels([a[0] for a in reversed(activities)], fontsize=12.5)
     ax.set_xticks([i + 0.5 for i in range(9)])
-    ax.set_xticklabels(weeks, fontsize=11, weight="bold")
+    ax.set_xticklabels(weeks, fontsize=13, weight="bold")
     ax.set_xlim(0, 9); ax.set_ylim(-0.5, n - 0.5)
     for x in range(10):
         ax.axvline(x, color="#c7d0da", linewidth=0.7, zorder=1)
     ax.set_xlabel("Semanas de internado (11 de mayo al 10 de julio de 2026)",
-                  fontsize=11)
-    ax.set_title(title, fontsize=14, weight="bold", color=NAVY, pad=14)
+                  fontsize=12.5)
+    ax.set_title(title, fontsize=16, weight="bold", color=NAVY, pad=16)
     ax.tick_params(length=0)
     for s in ["top", "right", "left"]:
         ax.spines[s].set_visible(False)
     plt.tight_layout()
-    plt.savefig(filename, dpi=300, bbox_inches="tight")
+    plt.savefig(filename, dpi=400, bbox_inches="tight")
+    plt.savefig(filename.replace(".png", ".pdf"), bbox_inches="tight")
     plt.close()
 
 planificadas = [
@@ -175,14 +176,14 @@ days = ["Lu", "Ma", "Mi", "Ju", "Vi"]
 
 nrows = 9 * 5
 ncols = len(activities)
-fig, ax = plt.subplots(figsize=(11.5, 16.5))
+fig, ax = plt.subplots(figsize=(12.5, 18.5))
 ax.set_xlim(-0.5, ncols); ax.set_ylim(0, nrows)
 ax.invert_yaxis()
 
-# encabezados de columnas (actividades) rotados
-for c, name in enumerate(activities):
-    ax.text(c + 0.5, -0.4, name, rotation=42, ha="left", va="bottom",
-            fontsize=8.2, color=NAVY, weight="bold")
+# encabezados de columna: numeros 1..12 (la leyenda mapea numero -> actividad)
+for c in range(ncols):
+    ax.text(c + 0.5, -0.35, str(c + 1), ha="center", va="bottom",
+            fontsize=15, color=NAVY, weight="bold")
 
 # grilla y celdas
 for w in range(9):
@@ -208,7 +209,7 @@ for w in range(9):
     for d in range(5):
         row = w * 5 + d
         yt.append(row + 0.5); yl.append(days[d])
-ax.set_yticks(yt); ax.set_yticklabels(yl, fontsize=8.5)
+ax.set_yticks(yt); ax.set_yticklabels(yl, fontsize=10.5)
 ax.set_xticks([])
 ax.tick_params(length=0)
 for s in ax.spines.values():
@@ -216,13 +217,23 @@ for s in ax.spines.values():
 
 # etiquetas de semana a la izquierda
 for w in range(9):
-    ax.text(-1.7, w * 5 + 2.5, week_dates[w], rotation=90, ha="center", va="center",
-            fontsize=9, weight="bold", color=NAVY)
+    ax.text(-1.9, w * 5 + 2.5, week_dates[w], rotation=90, ha="center", va="center",
+            fontsize=11, weight="bold", color=NAVY, clip_on=False)
+
+# leyenda: numero de columna -> actividad
+import matplotlib.patches as mpatches
+handles = [mpatches.Patch(facecolor=acol[i], edgecolor="#ffffff",
+           label="%d.  %s" % (i + 1, activities[i])) for i in range(ncols)]
+fig.legend(handles=handles, loc="lower center", ncol=2, fontsize=12,
+           frameon=True, bbox_to_anchor=(0.5, 0.006), handlelength=1.6,
+           columnspacing=1.6, borderpad=1.0,
+           title="Referencia de actividades (número de columna)", title_fontsize=13)
 
 fig.suptitle("Carta Gantt de actividades desarrolladas (detalle por día y semana)",
-             fontsize=14, weight="bold", color=NAVY, y=0.995)
-fig.subplots_adjust(top=0.83, left=0.13, right=0.99, bottom=0.02)
-plt.savefig("recursos-informe/fig_gantt_desarrollada.png", dpi=300, bbox_inches="tight")
+             fontsize=16, weight="bold", color=NAVY, y=0.995)
+fig.subplots_adjust(top=0.94, left=0.14, right=0.99, bottom=0.17)
+plt.savefig("recursos-informe/fig_gantt_desarrollada.png", dpi=400, bbox_inches="tight")
+plt.savefig("recursos-informe/fig_gantt_desarrollada.pdf", bbox_inches="tight")
 plt.close()
 
 import os
