@@ -124,23 +124,46 @@ ax.set_title(TITLE + "  ·  Opción 1", fontsize=16, weight="bold", color=NAVY, 
 save(fig, "fig_gantt_opcion1")
 
 # ---------------------------------------------------------------------
-# OPCION 2: cuadrícula de celdas separadas, un color por actividad
+# OPCION 2: cuadrícula de celdas separadas + etiquetas de actividad en
+# un recuadro con el color correspondiente (a la izquierda).
 # ---------------------------------------------------------------------
-fig, ax = plt.subplots(figsize=(15, 9))
+import textwrap
+LABELW = 5.0  # ancho (en unidades de dato) reservado para los recuadros de etiqueta
+fig, ax = plt.subplots(figsize=(17, 9.2))
+# grilla ligera de fondo (solo la zona de semanas)
+for w in range(9):
+    for i in range(n):
+        ax.add_patch(Rectangle((w + 0.16, i - 0.32), 0.68, 0.64, facecolor="#f2f5f9",
+                     edgecolor="#e3e8ee", linewidth=0.6, zorder=0))
 for i, (name, spans) in enumerate(ACTS):
     y = n - i - 1
+    # recuadro de etiqueta con el color de la actividad
+    ax.add_patch(FancyBboxPatch((-LABELW + 0.15, y - 0.36), LABELW - 0.45, 0.72,
+                 boxstyle="round,pad=0.02,rounding_size=0.10",
+                 facecolor=COLORS[i], edgecolor="white", linewidth=1.6, zorder=3,
+                 clip_on=False))
+    ax.text(-LABELW + 0.15 + (LABELW - 0.45) / 2, y, textwrap.fill(name, 30),
+            ha="center", va="center", fontsize=9.5, color="white", weight="bold",
+            zorder=4, clip_on=False)
+    # celdas de las semanas en que se realizó la actividad
     for (s, e) in spans:
         for w in range(s, e + 1):
             ax.add_patch(FancyBboxPatch((w - 1 + 0.16, y - 0.32), 0.68, 0.64,
                          boxstyle="round,pad=0.01,rounding_size=0.08",
                          facecolor=COLORS[i], edgecolor="white", linewidth=1.5, zorder=3))
-# grilla ligera de fondo
-for w in range(9):
-    for i in range(n):
-        ax.add_patch(Rectangle((w + 0.16, i - 0.32), 0.68, 0.64, facecolor="#f2f5f9",
-                     edgecolor="#e3e8ee", linewidth=0.6, zorder=0))
-base_axes(ax, n)
-ax.set_title(TITLE + "  ·  Opción 2", fontsize=16, weight="bold", color=NAVY, pad=16)
+# ejes: semanas arriba en x, sin etiquetas de texto en y
+ax.set_yticks([])
+ax.set_xticks([i + 0.5 for i in range(9)])
+ax.set_xticklabels(WEEKS, fontsize=13, weight="bold")
+ax.set_xlim(-LABELW, 9); ax.set_ylim(-0.5, n - 0.5)
+secax = ax.secondary_xaxis("bottom")
+secax.set_xticks([i + 0.5 for i in range(9)])
+secax.set_xticklabels(FECHAS, fontsize=9, color=GREY)
+secax.tick_params(length=0, pad=24); secax.spines["bottom"].set_visible(False)
+ax.tick_params(length=0)
+for spine in ["top", "right", "left"]:
+    ax.spines[spine].set_visible(False)
+ax.set_title(TITLE, fontsize=16, weight="bold", color=NAVY, pad=16)
 save(fig, "fig_gantt_opcion2")
 
 # ---------------------------------------------------------------------
