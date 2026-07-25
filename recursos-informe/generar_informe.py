@@ -526,7 +526,9 @@ acts_list = [
     "Control de indicadores y registros de despacho.",
     "Atención Farmacéutica y visitas domiciliarias.",
     "Educación sanitaria y promoción del uso racional de medicamentos.",
+    "Manejo de medicamentos sujetos a control legal.",
     "Inventario y ordenamiento de bodega.",
+    "Eliminación de medicamentos vencidos, en mal estado o sin rotulación adecuada.",
     "Apoyo en las supervisiones del Servicio de Salud.",
     "Conocimiento del arsenal farmacoterapéutico, los programas ministeriales (GES) y "
     "las fuentes de información de medicamentos.",
@@ -545,16 +547,20 @@ gantt_placeholder("fig_gantt_planificada")
 caption("Figura", "Carta Gantt de actividades planificadas del internado.")
 
 heading("2.2 Cronograma de actividades desarrolladas", level=2)
-para("La Figura 3 muestra las actividades efectivamente desarrolladas, con detalle por "
-     "día y por semana. En términos generales, la ejecución siguió lo planificado, con "
+para("La Figura 3 muestra, semana a semana, las actividades efectivamente "
+     "desarrolladas. En términos generales, la ejecución siguió lo planificado, con "
      "algunos ajustes propios de la dinámica del establecimiento. El fraccionamiento, "
-     "la dispensación y la Atención Farmacéutica se extendieron durante casi todo el "
-     "periodo, ya que constituyen tareas habituales de la unidad, y se sumaron "
-     "actividades no previstas al inicio, como el apoyo durante las supervisiones del "
-     "Servicio de Salud y una situación de vinculación con el medio surgida en terreno. "
-     "La Tabla 3 complementa la figura con el detalle diario de lo realizado.")
+     "el reenvasado y el despacho se mantuvieron durante casi todo el periodo, ya que "
+     "constituyen tareas habituales de la unidad, y la Atención Farmacéutica se realizó "
+     "todas las semanas, en más de una oportunidad por semana, gracias a la muy buena "
+     "disposición de los Químicos Farmacéuticos para integrar al interno a esa labor y "
+     "enseñarle cómo llevarla a cabo. Hacia las últimas semanas se sumó la eliminación "
+     "de medicamentos vencidos, y a lo largo de la rotación aparecieron actividades no "
+     "previstas al inicio, como el apoyo durante las supervisiones del Servicio de "
+     "Salud y una situación de vinculación con el medio surgida en terreno. La Tabla 3 "
+     "complementa la figura con el detalle de lo realizado día a día.")
 gantt_placeholder("fig_gantt_desarrollada")
-caption("Figura", "Carta Gantt de actividades desarrolladas, con detalle por día y semana.")
+caption("Figura", "Carta Gantt de actividades desarrolladas del internado.")
 
 caption("Tabla", "Cronograma detallado de actividades por día y semana.")
 make_table(
@@ -586,10 +592,11 @@ make_table(
         ["S7\n22-26 jun", "Tareas generales de farmacia", "Tareas generales de farmacia",
          "Fraccionamiento y farmacia", "Tareas generales de farmacia",
          "Taller de uso racional de medicamentos"],
-        ["S8\n29 jun-03 jul", "Rutina de farmacia", "Jornada vespertina; cierre de farmacia",
-         "Rutina de farmacia", "Salida a terreno para dejar medicamentos",
-         "Avance del seminario"],
-        ["S9\n06-10 jul", "Entrega a domicilio", "Entrega a domicilio",
+        ["S8\n29 jun-03 jul", "Rutina de farmacia y Atención Farmacéutica",
+         "Jornada vespertina; cierre de farmacia",
+         "Eliminación de vencidos (separación por bolsa)",
+         "Salida a terreno para dejar medicamentos", "Avance del seminario"],
+        ["S9\n06-10 jul", "Entrega a domicilio", "Eliminación de vencidos y acta de baja",
          "Entrega a domicilio", "Farmacia y fraccionamiento",
          "Atención Farmacéutica con Q.F. especialista"],
     ],
@@ -643,25 +650,33 @@ para("El fraccionamiento y el reenvasado fueron tareas frecuentes a lo largo del
      "a la vez. Responde al segundo objetivo específico.")
 
 heading("2.3.4 Dispensación informada de medicamentos", level=3)
-para("Se apoyó la dispensación de medicamentos a los usuarios, con lo que se "
-     "reforzaron el reconocimiento de los principios activos, las presentaciones y su "
-     "ubicación dentro de la unidad, y las buenas prácticas de entrega. La dispensación "
-     "se acompañó de la información necesaria para el uso correcto de la terapia, "
-     "verificando la indicación y resolviendo dudas de los pacientes. También se "
-     "conocieron los criterios de manejo de los medicamentos sujetos a control legal y "
-     "la forma de registrar su entrega. Responde al segundo objetivo específico.")
+para("Se apoyó la dispensación de medicamentos a los usuarios siguiendo el protocolo "
+     "de despacho del establecimiento, que busca entregar el tratamiento correcto de "
+     "forma ordenada y sin errores. El trabajo reforzó el reconocimiento de los "
+     "principios activos, las presentaciones y su ubicación dentro de la unidad, la "
+     "verificación de la receta y de los datos del paciente, y las buenas prácticas de "
+     "entrega. Cada despacho se registra en el sistema informático SINET Sur, que "
+     "descuenta el producto de su bincard, de modo que el stock queda actualizado y "
+     "trazable en todo momento. La dispensación se acompañó de la información necesaria "
+     "para el uso correcto de la terapia, verificando la indicación y resolviendo dudas "
+     "de los pacientes. Este orden y esta trazabilidad, junto con el traspaso "
+     "registrado de medicamentos desde la bodega a la farmacia, fueron uno de los "
+     "aspectos más destacables de la unidad. Responde al segundo objetivo específico.")
 
 heading("2.3.5 Atención Farmacéutica y visitas domiciliarias", level=3)
 para("La Atención Farmacéutica fue una de las actividades más significativas del "
-     "internado. Se acompañó al Químico Farmacéutico en la atención de los usuarios del "
-     "Programa de Salud Cardiovascular, tanto en box como en el domicilio, y se "
-     "participó en la entrega de medicamentos a domicilio para pacientes con "
-     "dificultades para acudir al centro. En estas visitas se revisaba la medicación "
-     "que el paciente realmente utilizaba, se conciliaba con la que tenía indicada, se "
-     "resolvían dudas sobre horarios y formas de administración, y se reforzaba la "
-     "adherencia. Durante una jornada vespertina se observó, además, el funcionamiento "
-     "de la farmacia en el horario de la tarde y el procedimiento de cierre de la "
-     "unidad. Esta actividad responde al tercer objetivo específico.")
+     "internado y se realizó todas las semanas, en más de una oportunidad por semana, "
+     "gracias a la muy buena disposición de los Químicos Farmacéuticos, que integraron "
+     "al interno a esta labor y le enseñaron cómo llevarla a cabo. Se acompañó al "
+     "Químico Farmacéutico en la atención de los usuarios del Programa de Salud "
+     "Cardiovascular, tanto en box como en el domicilio, y se participó en la entrega "
+     "de medicamentos a domicilio para pacientes con dificultades para acudir al "
+     "centro. En estas visitas se revisaba la medicación que el paciente realmente "
+     "utilizaba, se conciliaba con la que tenía indicada, se resolvían dudas sobre "
+     "horarios y formas de administración, y se reforzaba la adherencia. Durante una "
+     "jornada vespertina se observó, además, el funcionamiento de la farmacia en el "
+     "horario de la tarde y el procedimiento de cierre de la unidad. Esta actividad "
+     "responde al tercer objetivo específico.")
 
 heading("2.3.6 Educación sanitaria y promoción del uso racional de medicamentos", level=3)
 para("Se participó en un taller grupal de uso racional de medicamentos dirigido a los "
@@ -706,6 +721,28 @@ para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la 
      "Medscape y Drugs.com, además de la normativa y las guías del Ministerio de Salud. "
      "Esta actividad aporta al segundo y al tercer objetivo específico, ya que combina "
      "la gestión del arsenal con el uso seguro y racional de los medicamentos.")
+
+heading("2.3.9 Manejo de medicamentos sujetos a control legal", level=3)
+para("Se conoció el manejo de los medicamentos sujetos a control legal, es decir, los "
+     "psicotrópicos y estupefacientes, que se guardan bajo llave y se registran de "
+     "forma diferenciada en los libros oficiales de control. Se revisó cómo se "
+     "verifican las recetas retenidas, cómo se descuentan las existencias y cómo se "
+     "resguarda la trazabilidad de estos fármacos, en línea con la normativa vigente. "
+     "Esta actividad responde al segundo objetivo específico.")
+
+heading("2.3.10 Eliminación de medicamentos vencidos", level=3)
+para("Durante las dos últimas semanas del internado se participó en la eliminación de "
+     "medicamentos vencidos, en mal estado o sin rotulación adecuada, siguiendo el "
+     "procedimiento del establecimiento. El trabajo consistió en revisar las "
+     "existencias de la farmacia y la bodega, marcar y separar los productos que debían "
+     "eliminarse y llevarlos al área donde no se pueden dispensar, descontar sus saldos "
+     "de la bincard en el sistema y dejar constancia en el acta de baja mensual. Los "
+     "productos se acondicionan en bolsas y contenedores de residuos peligrosos para su "
+     "retiro a la sala REAS, desde donde una empresa externa realiza la disposición "
+     "final, y en el caso de los psicotrópicos y estupefacientes la eliminación se hace "
+     "con aviso previo a la autoridad sanitaria. Esta actividad reforzó la importancia "
+     "de dispensar solo productos vigentes y en buen estado, y responde al segundo "
+     "objetivo específico.")
 
 heading("2.4 Seminario de título", level=2)
 para("El seminario de título se desarrolló en paralelo a las actividades de farmacia y "
@@ -789,8 +826,8 @@ para("El protocolo tradujo los tres pilares del Modelo CMO en pasos concretos. L
      "farmacéuticos del establecimiento para su revisión y eventual incorporación a la "
      "práctica.")
 
-# ---------------------------------------------- 3. DISCUSION Y CONCLUSIONES
-heading("3. DISCUSIÓN Y CONCLUSIONES")
+# ---------------------------------------------- 3. DISCUSION
+heading("3. DISCUSIÓN")
 
 heading("3.1 Alcances y cumplimiento de los objetivos", level=2)
 para("El internado permitió conocer de manera directa el funcionamiento de una unidad "
@@ -825,48 +862,111 @@ para("Los resultados observados en terreno concuerdan con lo descrito en la lite
      "protocolo diseñado durante el internado.")
 
 heading("3.2 Fortalezas y debilidades del centro", level=2)
-para("Entre las fortalezas del CESFAM Villa Nonguén destacan su condición de centro "
-     "pionero en el Modelo de Salud Familiar, un equipo de farmacia consolidado que ya "
-     "realiza Atención Farmacéutica en box y en el domicilio, y una cultura de trabajo "
-     "orientada a la comunidad. La sectorización del territorio y la existencia de "
-     "indicadores de despacho facilitan la organización de la atención y el uso "
-     "eficiente de los recursos. Como aspecto por mejorar, se observó que la visita "
-     "domiciliaria del farmacéutico se realizaba sin un procedimiento escrito y "
-     "estandarizado, y que el registro se apoyaba en hojas personales además de la "
-     "ficha clínica electrónica, lo que dificultaba la comparación entre profesionales "
-     "y el seguimiento en el tiempo. La carga de trabajo y la disponibilidad de tiempo "
-     "también limitaban la frecuencia de las visitas.")
+para("El paso por la unidad de farmacia del CESFAM Villa Nonguén dejó ver varias "
+     "fortalezas. La más evidente es el orden y la trazabilidad con que se maneja el "
+     "medicamento, ya que cada producto se cuenta, se descuenta de su bincard al "
+     "momento del despacho y se traspasa desde la bodega a la farmacia dejando "
+     "registro, lo que permite saber en todo momento con qué stock se cuenta. El "
+     "sistema informático que utilizan, SINET Sur, resultó sencillo y fácil de "
+     "entender, y acompaña bien el trabajo diario de dispensación. A esto se suma un "
+     "equipo consolidado, con muy buena disposición de los Químicos Farmacéuticos para "
+     "enseñar y para llevar al interno a hacer Atención Farmacéutica más de una vez por "
+     "semana, y una atención cercana que la comunidad agradece. El centro tiene, "
+     "además, el valor histórico de haber sido pionero en el Modelo de Salud Familiar "
+     "en el país.")
+para("Entre los aspectos por mejorar, el más claro es el espacio. Como el CESFAM cada "
+     "vez atiende a más personas, la farmacia se ha ido quedando pequeña, con pocas "
+     "ventanillas de atención y momentos en que se llena de gente, lo que deja poco "
+     "lugar para que los usuarios esperen con comodidad. El espacio para guardar "
+     "medicamentos también es reducido, por lo que se deben hacer traspasos constantes "
+     "desde la bodega, que igualmente es pequeña y deja poco margen para movilizarse, "
+     "aun cuando los medicamentos están ordenados y se cumplen los criterios de "
+     "almacenamiento. Un aspecto adicional, que dio origen al seminario de título, es "
+     "que la visita domiciliaria del farmacéutico se realizaba sin un procedimiento "
+     "escrito y estandarizado, apoyándose en hojas personales además de la ficha "
+     "clínica, lo que dificultaba comparar el trabajo entre profesionales y darle "
+     "continuidad.")
 
-heading("3.3 Sugerencias y propuestas de mejora", level=2)
+heading("3.3 Comparación con otro centro de Atención Primaria", level=2)
+para("Para poner en contexto la experiencia, resulta útil comparar el CESFAM Villa "
+     "Nonguén con el CESFAM Hualpencillo, de la comuna de Hualpén, también en la Región "
+     "del Biobío, donde se desarrolló una práctica previa. Ambos son establecimientos "
+     "de Atención Primaria que trabajan bajo el Modelo de Salud Familiar y comparten "
+     "las tareas propias de una farmacia de este nivel, como el fraccionamiento y "
+     "reenvasado, el despacho informado, el control de los medicamentos sujetos a "
+     "fiscalización, la eliminación de productos vencidos y la entrega de medicamentos "
+     "a domicilio, que en Hualpencillo se organiza a través del programa Piloto con "
+     "generación de váuchers y en Villa Nonguén se enmarca en el Programa de Salud "
+     "Cardiovascular (Organización Mundial de la Salud, 2021; Ministerio de Salud de "
+     "Chile, 2020).")
+para("La primera diferencia está en la dependencia administrativa, ya que Hualpencillo "
+     "es de administración municipal, mientras que Villa Nonguén funciona bajo "
+     "administración delegada a cargo de COSADES. En cuanto a la gestión del "
+     "medicamento, el sistema informático de Villa Nonguén, SINET Sur, se percibió más "
+     "sencillo y con mayor trazabilidad que el utilizado en Hualpencillo, con un conteo "
+     "claro de existencias y descuentos automáticos al momento del despacho. Ambos "
+     "centros, de todos modos, comparten una limitación de infraestructura, ya que en "
+     "los dos el espacio de bodega y de farmacia resulta estrecho para el volumen de "
+     "medicamentos y de público que manejan. La diferencia es que en Hualpencillo esa "
+     "dificultad se acompaña de una falta de personal para cubrir la extensión horaria "
+     "y de la ausencia de Químico Farmacéutico en algunos horarios, lo que limita la "
+     "supervisión de la dispensación (Organización Panamericana de la Salud, 2024), "
+     "mientras que en Villa Nonguén el problema es sobre todo de espacio físico más que "
+     "de dotación. Esta comparación confirma que la infraestructura es un desafío común "
+     "de la Atención Primaria y que el orden y la trazabilidad de Villa Nonguén son una "
+     "fortaleza que vale la pena mantener.")
+
+heading("3.4 Originalidad y propuestas de mejora", level=2)
+numbered("Ampliar el espacio físico de la farmacia y de la bodega, aumentar el número "
+         "de ventanillas de atención y habilitar un área de espera más cómoda, de modo "
+         "de responder al crecimiento sostenido de la población inscrita.")
 numbered("Incorporar de manera formal el protocolo de Atención Farmacéutica "
          "domiciliaria basado en el Modelo CMO, con criterios de priorización propios "
-         "del farmacéutico, para ordenar el ingreso de los pacientes al seguimiento.")
+         "del farmacéutico, como aporte original surgido del seminario de título.")
 numbered("Estandarizar el registro de la Atención Farmacéutica mediante fichas de "
          "conciliación y de seguimiento comunes, que luego se traspasen a la ficha "
          "clínica electrónica, para mejorar la trazabilidad y la continuidad.")
 numbered("Reforzar el trabajo de la adherencia con herramientas simples y validadas, "
          "como el test de Morisky-Green-Levine, y con la entrevista motivacional.")
-numbered("Aprovechar la continuidad telefónica y las instancias educativas grupales "
-         "para mantener el vínculo con los pacientes entre una visita y otra.")
+numbered("Mantener y difundir las buenas prácticas de trazabilidad y orden observadas "
+         "en Villa Nonguén, que pueden servir de referencia para otros centros de la "
+         "red.")
 
-heading("3.4 Conclusiones", level=2)
+# ---------------------------------------------- 4. CONCLUSIONES
+heading("4. CONCLUSIONES")
+heading("4.1 Conclusiones generales", level=2)
 numbered("El internado en el CESFAM Villa Nonguén permitió desarrollar las "
          "competencias del Químico Farmacéutico en el ámbito de la farmacia asistencial "
          "y la Atención Primaria, cumpliendo el objetivo general planteado.")
 numbered("Se reconocieron la estructura y los procesos de la unidad de farmacia, y se "
          "participó en las tareas de recepción, almacenamiento, gestión de stock, "
-         "fraccionamiento, reenvasado y dispensación, resguardando la trazabilidad y el "
-         "uso eficiente de los recursos.")
-numbered("Se ejecutaron actividades de Atención Farmacéutica, visitas domiciliarias y "
-         "promoción del uso racional de los medicamentos, lo que evidenció el aporte "
-         "clínico y comunitario del farmacéutico en este nivel de atención.")
+         "fraccionamiento, reenvasado, despacho y eliminación de medicamentos vencidos, "
+         "resguardando la trazabilidad y el uso eficiente de los recursos.")
+numbered("Se ejecutó Atención Farmacéutica de forma sostenida, con más de una "
+         "actividad por semana durante toda la rotación, además de visitas "
+         "domiciliarias y la promoción del uso racional de los medicamentos, lo que "
+         "evidenció el aporte clínico y comunitario del farmacéutico en este nivel de "
+         "atención.")
 numbered("Se diseñó, como seminario de título, un protocolo de Atención Farmacéutica "
          "domiciliaria basado en el Modelo CMO, que aporta una herramienta concreta "
          "para ordenar, estandarizar y hacer trazable la visita domiciliaria en el "
          "establecimiento.")
-numbered("La experiencia confirmó la relevancia de la Atención Primaria como puerta de "
-         "entrada al sistema de salud y el valor de un ejercicio profesional basado en "
-         "la evidencia, la seguridad del paciente y el trabajo en equipo.")
+numbered("La comparación con el CESFAM Hualpencillo mostró que la limitación de "
+         "espacio es un desafío compartido de la Atención Primaria, y confirmó como "
+         "fortaleza distintiva de Villa Nonguén el orden y la trazabilidad en el manejo "
+         "del medicamento.")
+
+heading("4.2 Proyecciones y futuras líneas de trabajo", level=2)
+para("De cara al futuro, la principal proyección es implementar y evaluar en el propio "
+     "centro el protocolo de Atención Farmacéutica domiciliaria diseñado como seminario "
+     "de título, midiendo su efecto sobre la adherencia y sobre el control de los "
+     "pacientes del Programa de Salud Cardiovascular, para luego extenderlo a otros "
+     "programas y a usuarios con polifarmacia. En paralelo, sería valioso gestionar la "
+     "ampliación de la infraestructura de la farmacia y de la bodega, y avanzar hacia "
+     "un registro estandarizado de la Atención Farmacéutica que consolide la "
+     "trazabilidad que ya caracteriza al centro. Estas líneas permitirían proyectar el "
+     "aporte del Químico Farmacéutico más allá del periodo de internado y fortalecer la "
+     "calidad de la atención que recibe la comunidad.")
 
 # --------------------------------------------------------------- BIBLIOGRAFIA
 heading("BIBLIOGRAFÍA")
@@ -933,6 +1033,10 @@ refs = [
     "Morisky, D. E., Green, L. W., & Levine, D. M. (1986). Concurrent and predictive "
     "validity of a self-reported measure of medication adherence. Medical Care, 24(1), "
     "67-74.",
+    "Organización Mundial de la Salud. (2021). Atención primaria de salud. OMS. "
+    "https://www.who.int/es/health-topics/primary-health-care",
+    "Organización Panamericana de la Salud. (2024). Servicios farmacéuticos basados en "
+    "la atención primaria de salud. OPS.",
     "Sánchez-Yáñez, E., Manzano-García, M., & Morillo-Verdugo, R. (2023). Application "
     "of CMO (capacity, motivation, and opportunity) methodology in pharmaceutical care "
     "to optimize the pharmacotherapy in older people living with HIV. DISPIMDINAC "
