@@ -564,11 +564,6 @@ numbered("Ejecutar actividades de Atención Farmacéutica, visitas domiciliarias
          "educación sanitaria orientadas al uso racional de los medicamentos.")
 numbered("Diseñar un protocolo de Atención Farmacéutica domiciliaria basado en el "
          "Modelo CMO para el Programa de Salud Cardiovascular del CESFAM Villa Nonguén.")
-para("Cada uno de estos objetivos se desarrolla de forma explícita en el informe: los "
-     "tres primeros a través de las actividades descritas en la sección 2.2, y el "
-     "cuarto a través del seminario de título presentado en la sección 2.3. Su grado "
-     "de cumplimiento se evalúa en la sección 3.1.", space_after=8)
-
 # ---------------------------------------------------- 2. ACTIVIDADES REALIZADAS
 heading("2. ACTIVIDADES REALIZADAS")
 para("El internado se organizó en nueve semanas, entre el 11 de mayo y el 10 de julio "
@@ -670,7 +665,7 @@ para("Durante la primera semana se realizó la presentación al equipo de trabaj
      "hemorragia masiva y la convulsión. También se conocieron los programas "
      "computacionales de apoyo y la ficha clínica electrónica del establecimiento "
      "(SINET Sur), utilizada para consultar antecedentes y dejar constancia de las "
-     "atenciones. Esta actividad responde al primer objetivo específico.")
+     "atenciones.")
 
 heading("2.2.2 Recepción, almacenamiento y gestión del stock", level=3)
 para("Se participó en la recepción y el almacenamiento de los medicamentos que llegan "
@@ -685,8 +680,7 @@ para("Se participó en la recepción y el almacenamiento de los medicamentos que
      "existencias que no se podían aprovechar se reportaban y se redistribuían hacia "
      "otros CESFAM, de manera de dar un uso eficiente a los recursos y reducir las "
      "mermas. Se conoció además el proceso de programación anual de las necesidades de "
-     "medicamentos, que se planifica según la demanda y las metas del establecimiento. "
-     "Esta actividad responde al segundo objetivo específico.")
+     "medicamentos, que se planifica según la demanda y las metas del establecimiento.")
 
 heading("2.2.3 Fraccionamiento y reenvasado de medicamentos", level=3)
 para("El fraccionamiento y el reenvasado fueron tareas frecuentes a lo largo del "
@@ -697,7 +691,7 @@ para("El fraccionamiento y el reenvasado fueron tareas frecuentes a lo largo del
      "producto hasta el usuario. Este proceso permitió comprender la importancia del "
      "rotulado correcto y del resguardo de la información para la seguridad del "
      "paciente, sobre todo en personas con polifarmacia que retiran varios medicamentos "
-     "a la vez. Responde al segundo objetivo específico.")
+     "a la vez.")
 
 heading("2.2.4 Dispensación informada de medicamentos", level=3)
 para("Se apoyó la dispensación de medicamentos a los usuarios siguiendo el protocolo "
@@ -711,7 +705,7 @@ para("Se apoyó la dispensación de medicamentos a los usuarios siguiendo el pro
      "para el uso correcto de la terapia, verificando la indicación y resolviendo dudas "
      "de los pacientes. Este orden y esta trazabilidad, junto con el traspaso "
      "registrado de medicamentos desde la bodega a la farmacia, fueron uno de los "
-     "aspectos más destacables de la unidad. Responde al segundo objetivo específico.")
+     "aspectos más destacables de la unidad.")
 
 heading("2.2.5 Atención Farmacéutica y visitas domiciliarias", level=3)
 para("La Atención Farmacéutica fue una de las actividades más significativas del "
@@ -725,8 +719,7 @@ para("La Atención Farmacéutica fue una de las actividades más significativas 
      "utilizaba, se conciliaba con la que tenía indicada, se resolvían dudas sobre "
      "horarios y formas de administración, y se reforzaba la adherencia. Durante una "
      "jornada vespertina se observó, además, el funcionamiento de la farmacia en el "
-     "horario de la tarde y el procedimiento de cierre de la unidad. Esta actividad "
-     "responde al tercer objetivo específico.")
+     "horario de la tarde y el procedimiento de cierre de la unidad.")
 
 heading("2.2.6 Educación sanitaria y promoción del uso racional de medicamentos", level=3)
 para("Se participó en un taller grupal de uso racional de medicamentos dirigido a los "
@@ -735,8 +728,7 @@ para("Se participó en un taller grupal de uso racional de medicamentos dirigido
      "trípticos y desarrollar una dinámica participativa con paletas de respuesta, en "
      "la que los asistentes respondían situaciones sobre el uso correcto de los "
      "medicamentos y recibían pequeños incentivos por participar. La instancia "
-     "favoreció la educación sanitaria y acercó el rol del farmacéutico a la comunidad. "
-     "Responde al tercer objetivo específico.")
+     "favoreció la educación sanitaria y acercó el rol del farmacéutico a la comunidad.")
 
 heading("2.2.7 Control de indicadores, inventario y supervisiones", level=3)
 para("Se colaboró en el registro y el control de los indicadores de la unidad. Entre "
@@ -771,17 +763,14 @@ para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la 
      "tratamientos se dispensan y controlan de acuerdo con cada programa. Para resolver "
      "dudas sobre los medicamentos y apoyar la Atención Farmacéutica con evidencia, se "
      "recurrió a fuentes de información confiables y actualizadas, entre ellas UpToDate, "
-     "Medscape y Drugs.com, además de la normativa y las guías del Ministerio de Salud. "
-     "Esta actividad aporta al segundo y al tercer objetivo específico, ya que combina "
-     "la gestión del arsenal con el uso seguro y racional de los medicamentos.")
+     "Medscape y Drugs.com, además de la normativa y las guías del Ministerio de Salud.")
 
 heading("2.2.9 Manejo de medicamentos sujetos a control legal", level=3)
 para("Se conoció el manejo de los medicamentos sujetos a control legal, es decir, los "
      "psicotrópicos y estupefacientes, que se guardan bajo llave y se registran de "
      "forma diferenciada en los libros oficiales de control. Se revisó cómo se "
      "verifican las recetas retenidas, cómo se descuentan las existencias y cómo se "
-     "resguarda la trazabilidad de estos fármacos, en línea con la normativa vigente. "
-     "Esta actividad responde al segundo objetivo específico.")
+     "resguarda la trazabilidad de estos fármacos, en línea con la normativa vigente.")
 
 heading("2.2.10 Eliminación de medicamentos vencidos", level=3)
 para("Durante las dos últimas semanas del internado se participó en la eliminación de "
@@ -794,12 +783,11 @@ para("Durante las dos últimas semanas del internado se participó en la elimina
      "retiro a la sala REAS, desde donde una empresa externa realiza la disposición "
      "final, y en el caso de los psicotrópicos y estupefacientes la eliminación se hace "
      "con aviso previo a la autoridad sanitaria. Esta actividad reforzó la importancia "
-     "de dispensar solo productos vigentes y en buen estado, y responde al segundo "
-     "objetivo específico.")
+     "de dispensar solo productos vigentes y en buen estado.")
 
 heading("2.3 Seminario de título", level=2)
 para("El seminario de título se desarrolló en paralelo a las actividades de farmacia y "
-     "corresponde al cuarto objetivo específico del internado. Consistió en el diseño "
+     "consistió en el diseño "
      "de un protocolo de Atención Farmacéutica domiciliaria basado en el Modelo CMO "
      "para los pacientes del Programa de Salud Cardiovascular del CESFAM Villa Nonguén, "
      "bajo la guía del profesor Diego Ignacio Jorquera Pereira y con el apoyo del "
@@ -884,18 +872,16 @@ heading("3. DISCUSIÓN")
 
 heading("3.1 Alcances y cumplimiento de los objetivos", level=2)
 para("El internado permitió conocer de manera directa el funcionamiento de una unidad "
-     "de farmacia de Atención Primaria y participar en la mayoría de sus procesos, "
-     "desde la gestión del arsenal hasta la Atención Farmacéutica en el domicilio. El "
-     "primer objetivo específico se cumplió al reconocer la estructura, las funciones "
-     "del equipo y los procesos de la unidad, tal como se describe en la sección 1 y en "
-     "el organigrama. El segundo se alcanzó mediante la participación sostenida en la "
-     "recepción, el almacenamiento, la gestión de stock, el fraccionamiento, el "
-     "reenvasado y la dispensación, resguardando la trazabilidad a través del rotulado. "
-     "El tercero se desarrolló a través de la Atención Farmacéutica, las visitas "
-     "domiciliarias y el taller de uso racional de medicamentos. Y el cuarto se "
-     "materializó en el diseño del protocolo de Atención Farmacéutica domiciliaria "
-     "basado en el Modelo CMO, presentado como seminario de título. En conjunto, estas "
-     "actividades permitieron cumplir el objetivo general del internado.")
+     "de farmacia de Atención Primaria y participar en la mayoría de sus procesos. La "
+     "rotación abarcó tanto las tareas técnicas y de gestión, como la recepción, el "
+     "almacenamiento, la gestión de stock, el fraccionamiento, el reenvasado, la "
+     "dispensación y la eliminación de medicamentos vencidos, como las tareas clínicas "
+     "y comunitarias, entre ellas la Atención Farmacéutica, las visitas domiciliarias y "
+     "el taller de uso racional de medicamentos, y culminó con el diseño del protocolo "
+     "domiciliario basado en el Modelo CMO como seminario de título. Este recorrido, que "
+     "fue desde la gestión del arsenal hasta el seguimiento del paciente en su propio "
+     "hogar, entregó una visión completa del quehacer del Químico Farmacéutico en la "
+     "Atención Primaria y permitió alcanzar lo propuesto al inicio de la rotación.")
 para("Los resultados observados en terreno concuerdan con lo descrito en la literatura "
      "reciente. La evidencia muestra que las intervenciones farmacéuticas domiciliarias "
      "mejoran la adherencia y el conocimiento de los pacientes sobre su tratamiento, "
@@ -990,7 +976,8 @@ heading("4. CONCLUSIONES")
 heading("4.1 Conclusiones generales", level=2)
 numbered("El internado en el CESFAM Villa Nonguén permitió desarrollar las "
          "competencias del Químico Farmacéutico en el ámbito de la farmacia asistencial "
-         "y la Atención Primaria, cumpliendo el objetivo general planteado.", restart=True)
+         "y la Atención Primaria, integrándose de manera efectiva al equipo de la "
+         "unidad de farmacia.", restart=True)
 numbered("Se reconocieron la estructura y los procesos de la unidad de farmacia, y se "
          "participó en las tareas de recepción, almacenamiento, gestión de stock, "
          "fraccionamiento, reenvasado, despacho y eliminación de medicamentos vencidos, "
@@ -1095,7 +1082,11 @@ refs = [
     "to optimize the pharmacotherapy in older people living with HIV. DISPIMDINAC "
     "project. Revista Española de Quimioterapia, 36(6), 584-591.",
 ]
-for r in sorted(refs, key=lambda s: s.lower()):
+import unicodedata as _ud
+def _sortkey(s):
+    return "".join(c for c in _ud.normalize("NFD", s.lower())
+                   if _ud.category(c) != "Mn")
+for r in sorted(refs, key=_sortkey):
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
     p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
     p.paragraph_format.space_after = Pt(8)
@@ -1155,5 +1146,21 @@ bullet("APF 13 Eliminación de medicamentos expirados, en mal estado o sin rotul
        "adecuada.")
 bullet("APF 22 Manejo de psicotrópicos y estupefacientes.")
 
-doc.save("Informe de Internado - Farmacia Asistencial y APS - CESFAM Villa Nonguen.docx")
+_OUT = "Informe de Internado - Farmacia Asistencial y APS - CESFAM Villa Nonguen.docx"
+doc.save(_OUT)
+
+# Fuerza Arial en el tema del documento (elimina cualquier resto de Calibri que
+# provenga de fuentes de tema minorHAnsi/majorHAnsi).
+import zipfile, os as _os
+_tmp = _OUT + ".tmp"
+with zipfile.ZipFile(_OUT, "r") as zin, zipfile.ZipFile(_tmp, "w", zipfile.ZIP_DEFLATED) as zout:
+    for it in zin.namelist():
+        data = zin.read(it)
+        if it == "word/theme/theme1.xml":
+            t = data.decode("utf-8")
+            t = t.replace("Calibri Light", "Arial").replace("Calibri", "Arial")
+            data = t.encode("utf-8")
+        zout.writestr(it, data)
+_os.replace(_tmp, _OUT)
+print("Documento generado correctamente (tema en Arial).")
 print("Documento generado correctamente.")
