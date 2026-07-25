@@ -525,7 +525,7 @@ para("El marco que hoy se usa como referencia para modernizar la atención "
      "Oportunidad, por último, busca llegar al paciente más allá del box, en su casa o "
      "por teléfono, para resolver a tiempo lo que vaya surgiendo. Estos tres pilares "
      "son los que dan forma al protocolo desarrollado como seminario de título durante "
-     "el internado, descrito en la sección 2.4.")
+     "el internado, descrito en la sección 2.3.")
 
 heading("1.5 Terminología y definiciones", level=2)
 para("Para facilitar la lectura del informe se precisan a continuación algunos "
@@ -565,8 +565,8 @@ numbered("Ejecutar actividades de Atención Farmacéutica, visitas domiciliarias
 numbered("Diseñar un protocolo de Atención Farmacéutica domiciliaria basado en el "
          "Modelo CMO para el Programa de Salud Cardiovascular del CESFAM Villa Nonguén.")
 para("Cada uno de estos objetivos se desarrolla de forma explícita en el informe: los "
-     "tres primeros a través de las actividades descritas en la sección 2.3, y el "
-     "cuarto a través del seminario de título presentado en la sección 2.4. Su grado "
+     "tres primeros a través de las actividades descritas en la sección 2.2, y el "
+     "cuarto a través del seminario de título presentado en la sección 2.3. Su grado "
      "de cumplimiento se evalúa en la sección 3.1.", space_after=8)
 
 # ---------------------------------------------------- 2. ACTIVIDADES REALIZADAS
@@ -594,16 +594,8 @@ acts_list = [
 ]
 numbered_list(acts_list)
 
-heading("2.1 Cronograma de actividades planificadas", level=2)
-para("Al inicio del internado se acordó con el equipo de farmacia un plan de trabajo "
-     "que ordenó la rotación por las distintas tareas de la unidad y reservó tiempo "
-     "para el desarrollo del seminario de título. La Figura 2 presenta la carta Gantt "
-     "con las actividades planificadas a lo largo de las nueve semanas.")
-gantt_placeholder("de actividades planificadas")
-caption("Figura", "Carta Gantt de actividades planificadas del internado.")
-
-heading("2.2 Cronograma de actividades desarrolladas", level=2)
-para("La Figura 3 muestra, semana a semana, las actividades efectivamente "
+heading("2.1 Cronograma de actividades desarrolladas", level=2)
+para("La Figura 2 muestra, semana a semana, las actividades efectivamente "
      "desarrolladas. En términos generales, la ejecución siguió lo planificado, con "
      "algunos ajustes propios de la dinámica del establecimiento. El fraccionamiento, "
      "el reenvasado y el despacho se mantuvieron durante casi todo el periodo, ya que "
@@ -665,9 +657,9 @@ para("Respecto de las actividades no realizadas, la participación en el Comité
      "farmacovigilancia se limitaron a conocer el circuito de notificación, sin que se "
      "presentara un caso que ameritara notificar durante la estadía.")
 
-heading("2.3 Descripción de las actividades realizadas", level=2)
+heading("2.2 Descripción de las actividades realizadas", level=2)
 
-heading("2.3.1 Inducción y conocimiento del centro y de la unidad de farmacia", level=3)
+heading("2.2.1 Inducción y conocimiento del centro y de la unidad de farmacia", level=3)
 para("Durante la primera semana se realizó la presentación al equipo de trabajo y se "
      "recorrieron las dependencias del CESFAM y de la unidad de farmacia. El equipo "
      "explicó la organización de la unidad, la ubicación física de los medicamentos, el "
@@ -680,7 +672,7 @@ para("Durante la primera semana se realizó la presentación al equipo de trabaj
      "(SINET Sur), utilizada para consultar antecedentes y dejar constancia de las "
      "atenciones. Esta actividad responde al primer objetivo específico.")
 
-heading("2.3.2 Recepción, almacenamiento y gestión del stock", level=3)
+heading("2.2.2 Recepción, almacenamiento y gestión del stock", level=3)
 para("Se participó en la recepción y el almacenamiento de los medicamentos que llegan "
      "a la unidad, que se adquieren principalmente a través de la Central de "
      "Abastecimiento (CENABAST) y que se ordenan resguardando las condiciones de "
@@ -696,7 +688,7 @@ para("Se participó en la recepción y el almacenamiento de los medicamentos que
      "medicamentos, que se planifica según la demanda y las metas del establecimiento. "
      "Esta actividad responde al segundo objetivo específico.")
 
-heading("2.3.3 Fraccionamiento y reenvasado de medicamentos", level=3)
+heading("2.2.3 Fraccionamiento y reenvasado de medicamentos", level=3)
 para("El fraccionamiento y el reenvasado fueron tareas frecuentes a lo largo del "
      "internado. El trabajo consistió en acondicionar los medicamentos en la cantidad "
      "correspondiente a cada paciente y preparar las bolsas de tratamiento, rotulando "
@@ -707,7 +699,7 @@ para("El fraccionamiento y el reenvasado fueron tareas frecuentes a lo largo del
      "paciente, sobre todo en personas con polifarmacia que retiran varios medicamentos "
      "a la vez. Responde al segundo objetivo específico.")
 
-heading("2.3.4 Dispensación informada de medicamentos", level=3)
+heading("2.2.4 Dispensación informada de medicamentos", level=3)
 para("Se apoyó la dispensación de medicamentos a los usuarios siguiendo el protocolo "
      "de despacho del establecimiento, que busca entregar el tratamiento correcto de "
      "forma ordenada y sin errores. El trabajo reforzó el reconocimiento de los "
@@ -721,7 +713,7 @@ para("Se apoyó la dispensación de medicamentos a los usuarios siguiendo el pro
      "registrado de medicamentos desde la bodega a la farmacia, fueron uno de los "
      "aspectos más destacables de la unidad. Responde al segundo objetivo específico.")
 
-heading("2.3.5 Atención Farmacéutica y visitas domiciliarias", level=3)
+heading("2.2.5 Atención Farmacéutica y visitas domiciliarias", level=3)
 para("La Atención Farmacéutica fue una de las actividades más significativas del "
      "internado y se realizó todas las semanas, en más de una oportunidad por semana, "
      "gracias a la muy buena disposición de los Químicos Farmacéuticos, que integraron "
@@ -736,7 +728,7 @@ para("La Atención Farmacéutica fue una de las actividades más significativas 
      "horario de la tarde y el procedimiento de cierre de la unidad. Esta actividad "
      "responde al tercer objetivo específico.")
 
-heading("2.3.6 Educación sanitaria y promoción del uso racional de medicamentos", level=3)
+heading("2.2.6 Educación sanitaria y promoción del uso racional de medicamentos", level=3)
 para("Se participó en un taller grupal de uso racional de medicamentos dirigido a los "
      "usuarios del CESFAM. La actividad se realizó junto al Químico Farmacéutico y "
      "consistió en conversar con los pacientes, entregar material educativo en forma de "
@@ -746,7 +738,7 @@ para("Se participó en un taller grupal de uso racional de medicamentos dirigido
      "favoreció la educación sanitaria y acercó el rol del farmacéutico a la comunidad. "
      "Responde al tercer objetivo específico.")
 
-heading("2.3.7 Control de indicadores, inventario y supervisiones", level=3)
+heading("2.2.7 Control de indicadores, inventario y supervisiones", level=3)
 para("Se colaboró en el registro y el control de los indicadores de la unidad. Entre "
      "ellos, se trabajó en el indicador de porcentaje de despacho de medicamentos "
      "realizado según el protocolo de Atención Farmacéutica, desagregado por sector, y "
@@ -761,7 +753,7 @@ para("Se colaboró en el registro y el control de los indicadores de la unidad. 
      "situación que reflejó el componente humano y comunitario del trabajo en la "
      "Atención Primaria.")
 
-heading("2.3.8 Arsenal farmacoterapéutico, programas ministeriales y fuentes de información", level=3)
+heading("2.2.8 Arsenal farmacoterapéutico, programas ministeriales y fuentes de información", level=3)
 para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la unidad, "
      "es decir, el listado de medicamentos disponibles en el CESFAM según la canasta de "
      "la Atención Primaria y las orientaciones del Ministerio de Salud, junto con los "
@@ -783,7 +775,7 @@ para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la 
      "Esta actividad aporta al segundo y al tercer objetivo específico, ya que combina "
      "la gestión del arsenal con el uso seguro y racional de los medicamentos.")
 
-heading("2.3.9 Manejo de medicamentos sujetos a control legal", level=3)
+heading("2.2.9 Manejo de medicamentos sujetos a control legal", level=3)
 para("Se conoció el manejo de los medicamentos sujetos a control legal, es decir, los "
      "psicotrópicos y estupefacientes, que se guardan bajo llave y se registran de "
      "forma diferenciada en los libros oficiales de control. Se revisó cómo se "
@@ -791,7 +783,7 @@ para("Se conoció el manejo de los medicamentos sujetos a control legal, es deci
      "resguarda la trazabilidad de estos fármacos, en línea con la normativa vigente. "
      "Esta actividad responde al segundo objetivo específico.")
 
-heading("2.3.10 Eliminación de medicamentos vencidos", level=3)
+heading("2.2.10 Eliminación de medicamentos vencidos", level=3)
 para("Durante las dos últimas semanas del internado se participó en la eliminación de "
      "medicamentos vencidos, en mal estado o sin rotulación adecuada, siguiendo el "
      "procedimiento del establecimiento. El trabajo consistió en revisar las "
@@ -805,7 +797,7 @@ para("Durante las dos últimas semanas del internado se participó en la elimina
      "de dispensar solo productos vigentes y en buen estado, y responde al segundo "
      "objetivo específico.")
 
-heading("2.4 Seminario de título", level=2)
+heading("2.3 Seminario de título", level=2)
 para("El seminario de título se desarrolló en paralelo a las actividades de farmacia y "
      "corresponde al cuarto objetivo específico del internado. Consistió en el diseño "
      "de un protocolo de Atención Farmacéutica domiciliaria basado en el Modelo CMO "
@@ -813,7 +805,7 @@ para("El seminario de título se desarrolló en paralelo a las actividades de fa
      "bajo la guía del profesor Diego Ignacio Jorquera Pereira y con el apoyo del "
      "Químico Farmacéutico tutor del centro. A continuación se describe cómo se realizó.")
 
-heading("2.4.1 Objetivos del seminario", level=3)
+heading("2.3.1 Objetivos del seminario", level=3)
 para("El objetivo general del seminario fue diseñar un protocolo de atención "
      "farmacéutica domiciliaria basado en el Modelo CMO para los pacientes del Programa "
      "de Salud Cardiovascular del CESFAM Villa Nonguén. Para alcanzarlo se plantearon "
@@ -824,7 +816,7 @@ para("El objetivo general del seminario fue diseñar un protocolo de atención "
      "protocolo, referidas a la adherencia, a los PRM y RNM y al registro de la "
      "atención.")
 
-heading("2.4.2 Tipo de estudio y desarrollo", level=3)
+heading("2.3.2 Tipo de estudio y desarrollo", level=3)
 para("El seminario correspondió a un trabajo de desarrollo metodológico. No se realizó "
      "un experimento ni se recogieron datos clínicos de pacientes con fines de "
      "investigación, sino que se diseñó un protocolo a partir de la revisión de la "
@@ -837,7 +829,7 @@ para("El seminario correspondió a un trabajo de desarrollo metodológico. No se
      "el gestor bibliográfico Mendeley. Como apoyo para la información de medicamentos "
      "se consultaron fuentes de referencia como UpToDate, Medscape y Drugs.com.")
 
-heading("2.4.3 Diagnóstico de brechas, población y criterios", level=3)
+heading("2.3.3 Diagnóstico de brechas, población y criterios", level=3)
 para("En una primera etapa se diagnosticaron las brechas del programa de visitas "
      "domiciliarias vigente, comparando la práctica del centro con las orientaciones "
      "técnicas del Programa de Salud Cardiovascular y del Fondo de Farmacia, la Guía de "
@@ -867,7 +859,7 @@ make_table(
     ],
     col_widths=[3.0, 4.0, 4.0, 4.0], font_size=9)
 
-heading("2.4.4 Instrumentos diseñados y consideraciones éticas", level=3)
+heading("2.3.4 Instrumentos diseñados y consideraciones éticas", level=3)
 para("El protocolo tradujo los tres pilares del Modelo CMO en pasos concretos. La "
      "Capacidad se abordó mediante la priorización de los pacientes y la revisión del "
      "botiquín del hogar para conciliar la medicación (Delgado et al., 2007); la "
