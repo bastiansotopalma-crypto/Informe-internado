@@ -62,6 +62,26 @@ _prelim.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 _prelim.paragraph_format.space_before = Pt(12); _prelim.paragraph_format.space_after = Pt(12)
 _prelim.paragraph_format.keep_with_next = True
 
+# Fuente por defecto de TODO el documento = Arial (incluye tabla de contenidos,
+# listas y cualquier texto generado por Word).
+def _set_default_font_arial():
+    styles_el = doc.styles.element
+    dd = styles_el.find(qn("w:docDefaults"))
+    if dd is None:
+        dd = OxmlElement("w:docDefaults"); styles_el.insert(0, dd)
+    rpd = dd.find(qn("w:rPrDefault"))
+    if rpd is None:
+        rpd = OxmlElement("w:rPrDefault"); dd.append(rpd)
+    rpr = rpd.find(qn("w:rPr"))
+    if rpr is None:
+        rpr = OxmlElement("w:rPr"); rpd.append(rpr)
+    rfonts = rpr.find(qn("w:rFonts"))
+    if rfonts is None:
+        rfonts = OxmlElement("w:rFonts"); rpr.append(rfonts)
+    for a in ("w:ascii", "w:hAnsi", "w:cs", "w:eastAsia"):
+        rfonts.set(qn(a), FONT)
+_set_default_font_arial()
+
 # ------------------------------------------------------------- helpers
 def set_margins(section):
     section.left_margin = Cm(4); section.right_margin = Cm(2.5)
@@ -136,8 +156,26 @@ def bullet(text, style="List Bullet"):
         r.font.name = FONT; r.font.size = Pt(12)
     return p
 
-def numbered(text):
-    return bullet(text, style="List Number")
+_numctr = [0]
+def numbered(text, restart=False):
+    """Lista numerada manual (Arial). restart=True reinicia el conteo en 1,
+    para que cada lista empiece en 1 y no continúe desde la anterior."""
+    if restart:
+        _numctr[0] = 0
+    _numctr[0] += 1
+    p = doc.add_paragraph()
+    p.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
+    p.paragraph_format.left_indent = Cm(1)
+    p.paragraph_format.first_line_indent = Cm(-0.6)
+    p.paragraph_format.space_after = Pt(4)
+    p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    r = p.add_run(f"{_numctr[0]}. " + cap_terms(text))
+    r.font.name = FONT; r.font.size = Pt(12)
+    return p
+
+def numbered_list(items):
+    for i, t in enumerate(items):
+        numbered(t, restart=(i == 0))
 
 def heading(text, level=1):
     return doc.add_heading(cap_terms(text), level=level)
@@ -147,11 +185,15 @@ def titulo_prelim(text):
     r = p.add_run(text); r.font.name = FONT; r.font.size = Pt(12); r.bold = True
     return p
 
+_seqctr = {}
 def caption(label, text):
+    _seqctr[label] = _seqctr.get(label, 0) + 1
+    n = _seqctr[label]
     p = doc.add_paragraph(style="Caption")
     p.add_run(f"{label} ")
-    add_field(p, f" SEQ {label} \\* ARABIC ", "1")
-    p.add_run(f". {text}")
+    # Campo SEQ para que Word renumere solo; el marcador ya muestra el número correcto.
+    add_field(p, f" SEQ {label} \\* ARABIC ", str(n))
+    p.add_run(f". {cap_terms(text)}")
     return p
 
 def add_image(name, width_cm):
@@ -160,7 +202,7 @@ def add_image(name, width_cm):
     p.add_run().add_picture(f"{FIG}/{name}", width=Cm(width_cm))
     return p
 
-def gantt_placeholder(fname):
+def gantt_placeholder(desc):
     """Recuadro con espacio reservado para que el usuario inserte la Carta Gantt
     manualmente (el usuario pidió no integrarla al Word)."""
     p = doc.add_paragraph(); p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -170,14 +212,15 @@ def gantt_placeholder(fname):
     for edge in ("top", "bottom", "left", "right"):
         e = OxmlElement("w:" + edge)
         e.set(qn("w:val"), "dashed"); e.set(qn("w:sz"), "6")
-        e.set(qn("w:space"), "16"); e.set(qn("w:color"), "1F3B5C")
+        e.set(qn("w:space"), "16"); e.set(qn("w:color"), "808080")
         pbdr.append(e)
     pPr.append(pbdr)
-    r = p.add_run("[ Espacio reservado para insertar aquí la Carta Gantt ]")
+    r = p.add_run("[ Espacio reservado para insertar aquí la Carta Gantt %s ]" % desc)
     r.italic = True; r.font.name = FONT; r.font.size = Pt(11); r.font.color.rgb = BLACK
     for _ in range(6):
         r.add_break()
-    r2 = p.add_run("Archivo %s.png (alta resolución) o %s.pdf (vectorial)" % (fname, fname))
+    r2 = p.add_run("Elija uno de los diseños disponibles en la carpeta recursos-informe "
+                   "(fig_gantt_opcion1, opcion2 u opcion3) en PNG o PDF.")
     r2.italic = True; r2.font.name = FONT; r2.font.size = Pt(10); r2.font.color.rgb = BLACK
     return p
 
@@ -513,7 +556,7 @@ para("Desarrollar las competencias profesionales del Químico Farmacéutico en e
      "internado en el CESFAM Villa Nonguén.")
 heading("1.6.2 Objetivos específicos", level=3)
 numbered("Reconocer la estructura organizacional y las funciones del equipo de la "
-         "unidad de farmacia del CESFAM Villa Nonguén.")
+         "unidad de farmacia del CESFAM Villa Nonguén.", restart=True)
 numbered("Participar en los procesos técnicos de recepción, almacenamiento, "
          "fraccionamiento, reenvasado y dispensación de medicamentos de la unidad de "
          "farmacia.")
@@ -549,15 +592,14 @@ acts_list = [
     "Vinculación con el medio.",
     "Seminario de título: diseño de un protocolo de Atención Farmacéutica domiciliaria.",
 ]
-for a in acts_list:
-    numbered(a)
+numbered_list(acts_list)
 
 heading("2.1 Cronograma de actividades planificadas", level=2)
 para("Al inicio del internado se acordó con el equipo de farmacia un plan de trabajo "
      "que ordenó la rotación por las distintas tareas de la unidad y reservó tiempo "
      "para el desarrollo del seminario de título. La Figura 2 presenta la carta Gantt "
      "con las actividades planificadas a lo largo de las nueve semanas.")
-gantt_placeholder("fig_gantt_planificada")
+gantt_placeholder("de actividades planificadas")
 caption("Figura", "Carta Gantt de actividades planificadas del internado.")
 
 heading("2.2 Cronograma de actividades desarrolladas", level=2)
@@ -573,7 +615,7 @@ para("La Figura 3 muestra, semana a semana, las actividades efectivamente "
      "previstas al inicio, como el apoyo durante las supervisiones del Servicio de "
      "Salud y una situación de vinculación con el medio surgida en terreno. La Tabla 3 "
      "complementa la figura con el detalle de lo realizado día a día.")
-gantt_placeholder("fig_gantt_desarrollada")
+gantt_placeholder("de actividades desarrolladas")
 caption("Figura", "Carta Gantt de actividades desarrolladas del internado.")
 
 caption("Tabla", "Cronograma detallado de actividades por día y semana.")
@@ -581,7 +623,7 @@ make_table(
     ["Semana", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"],
     [
         ["S1\n11-15 may", "Inducción y recorrido de la unidad",
-         "Fraccionamiento y reenvasado; cambio de vildagliptina",
+         "Fraccionamiento y reenvasado; incorporación de vildagliptina al arsenal",
          "Control de vencimientos; indicador de despacho por sector",
          "Envasado; protocolos de emergencia; llegada de pedido; Atención Farmacéutica",
          "Seminario: revisión bibliográfica y Modelo CMO"],
@@ -723,8 +765,11 @@ heading("2.3.8 Arsenal farmacoterapéutico, programas ministeriales y fuentes de
 para("A lo largo del internado se conoció el arsenal farmacoterapéutico de la unidad, "
      "es decir, el listado de medicamentos disponibles en el CESFAM según la canasta de "
      "la Atención Primaria y las orientaciones del Ministerio de Salud, junto con los "
-     "criterios que definen qué medicamentos se incorporan o se retiran, como ocurrió "
-     "con el reemplazo de la vildagliptina por otra alternativa dentro del mismo grupo. "
+     "criterios que definen qué medicamentos se incorporan o se retiran del arsenal. Un "
+     "ejemplo observado durante el internado fue la incorporación de la vildagliptina, "
+     "un inhibidor de la enzima DPP-4, como una alternativa más para el tratamiento de "
+     "la diabetes mellitus tipo 2, mientras que la glibenclamida, una sulfonilurea "
+     "asociada a un mayor riesgo de hipoglucemia, se está retirando de forma gradual. "
      "También se conoció el manejo de los medicamentos sujetos a control legal, con su "
      "registro y custodia diferenciados, y el circuito de notificación de "
      "farmacovigilancia frente a una sospecha de reacción adversa, aunque durante la "
@@ -935,7 +980,7 @@ para("La primera diferencia está en la dependencia administrativa, ya que Hualp
 heading("3.4 Originalidad y propuestas de mejora", level=2)
 numbered("Ampliar el espacio físico de la farmacia y de la bodega, aumentar el número "
          "de ventanillas de atención y habilitar un área de espera más cómoda, de modo "
-         "de responder al crecimiento sostenido de la población inscrita.")
+         "de responder al crecimiento sostenido de la población inscrita.", restart=True)
 numbered("Incorporar de manera formal el protocolo de Atención Farmacéutica "
          "domiciliaria basado en el Modelo CMO, con criterios de priorización propios "
          "del farmacéutico, como aporte original surgido del seminario de título.")
@@ -953,7 +998,7 @@ heading("4. CONCLUSIONES")
 heading("4.1 Conclusiones generales", level=2)
 numbered("El internado en el CESFAM Villa Nonguén permitió desarrollar las "
          "competencias del Químico Farmacéutico en el ámbito de la farmacia asistencial "
-         "y la Atención Primaria, cumpliendo el objetivo general planteado.")
+         "y la Atención Primaria, cumpliendo el objetivo general planteado.", restart=True)
 numbered("Se reconocieron la estructura y los procesos de la unidad de farmacia, y se "
          "participó en las tareas de recepción, almacenamiento, gestión de stock, "
          "fraccionamiento, reenvasado, despacho y eliminación de medicamentos vencidos, "
