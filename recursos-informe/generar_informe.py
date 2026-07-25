@@ -28,7 +28,7 @@ pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
 pf.space_after = Pt(6)
 pf.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
 
-def style_heading(name, align, upper_color=NAVY, space_before=16, space_after=10):
+def style_heading(name, align, upper_color=BLACK, space_before=16, space_after=10):
     st = doc.styles[name]
     st.font.name = FONT
     st.font.size = Pt(12)
@@ -49,6 +49,18 @@ cap.font.name = FONT; cap.font.size = Pt(10); cap.font.italic = True
 cap.font.bold = False; cap.font.color.rgb = BLACK
 cap.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
 cap.paragraph_format.space_before = Pt(4); cap.paragraph_format.space_after = Pt(10)
+
+# Estilo para titulos de paginas preliminares (NO es Heading, por lo que NO
+# aparece en la Tabla de Contenidos). Se ve igual que un titulo de nivel 1.
+from docx.enum.style import WD_STYLE_TYPE
+_prelim = doc.styles.add_style("TituloPrelim", WD_STYLE_TYPE.PARAGRAPH)
+_prelim.base_style = doc.styles["Normal"]
+_prelim.font.name = FONT; _prelim.font.size = Pt(12); _prelim.font.bold = True
+_prelim.font.color.rgb = BLACK
+_prelim.element.rPr.rFonts.set(qn("w:eastAsia"), FONT)
+_prelim.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+_prelim.paragraph_format.space_before = Pt(12); _prelim.paragraph_format.space_after = Pt(12)
+_prelim.paragraph_format.keep_with_next = True
 
 # ------------------------------------------------------------- helpers
 def set_margins(section):
@@ -130,6 +142,11 @@ def numbered(text):
 def heading(text, level=1):
     return doc.add_heading(cap_terms(text), level=level)
 
+def titulo_prelim(text):
+    p = doc.add_paragraph(style="TituloPrelim")
+    r = p.add_run(text); r.font.name = FONT; r.font.size = Pt(12); r.bold = True
+    return p
+
 def caption(label, text):
     p = doc.add_paragraph(style="Caption")
     p.add_run(f"{label} ")
@@ -157,11 +174,11 @@ def gantt_placeholder(fname):
         pbdr.append(e)
     pPr.append(pbdr)
     r = p.add_run("[ Espacio reservado para insertar aquí la Carta Gantt ]")
-    r.italic = True; r.font.name = FONT; r.font.size = Pt(11); r.font.color.rgb = NAVY
+    r.italic = True; r.font.name = FONT; r.font.size = Pt(11); r.font.color.rgb = BLACK
     for _ in range(6):
         r.add_break()
     r2 = p.add_run("Archivo %s.png (alta resolución) o %s.pdf (vectorial)" % (fname, fname))
-    r2.italic = True; r2.font.name = FONT; r2.font.size = Pt(10); r2.font.color.rgb = NAVY
+    r2.italic = True; r2.font.name = FONT; r2.font.size = Pt(10); r2.font.color.rgb = BLACK
     return p
 
 def defterm(term, definition):
@@ -248,29 +265,36 @@ centered("Concepción, Chile", size=12, space_after=2)
 centered("2026", size=12)
 
 # =====================================================================
-# SECCION 2: preliminares (romanos)
+# SECCION 2: preliminares (romanos). La portada NO se numera; esta seccion
+# parte en i (Tabla de contenidos) y sigue en romanos hasta Abreviaturas.
 # =====================================================================
 doc.add_section(WD_SECTION.NEW_PAGE)
 sec1 = doc.sections[1]; set_margins(sec1)
+# El logo va SOLO en la portada. Esta seccion no debe repetir el encabezado.
+sec1.different_first_page_header_footer = False
+sec1.header.is_linked_to_previous = False
+sec1.header.paragraphs[0].text = ""
+sec1.first_page_header.is_linked_to_previous = False
+sec1.first_page_header.paragraphs[0].text = ""
 doc.sections[0].footer.is_linked_to_previous = False
 doc.sections[0].footer.paragraphs[0].text = ""
 footer_page_number(sec1); set_pgnum(sec1, fmt="lowerRoman", start=1)
 
-heading("TABLA DE CONTENIDOS")
+titulo_prelim("TABLA DE CONTENIDOS")
 p = doc.add_paragraph()
-add_field(p, ' TOC \\o "1-3" \\h \\z \\u ',
+add_field(p, ' TOC \\o "1-2" \\h \\z \\u ',
           "Actualice este campo en Word: seleccione todo (Ctrl+E) y presione F9.")
 
 doc.add_page_break()
-heading("ÍNDICE DE TABLAS")
+titulo_prelim("ÍNDICE DE TABLAS")
 p = doc.add_paragraph()
 add_field(p, ' TOC \\h \\z \\c "Tabla" ', "Actualice este campo en Word (F9).")
-heading("ÍNDICE DE FIGURAS")
+titulo_prelim("ÍNDICE DE FIGURAS")
 p = doc.add_paragraph()
 add_field(p, ' TOC \\h \\z \\c "Figura" ', "Actualice este campo en Word (F9).")
 
 doc.add_page_break()
-heading("ABREVIATURAS")
+titulo_prelim("ABREVIATURAS")
 abrev = [
     ("APS", "Atención Primaria de Salud"),
     ("CESFAM", "Centro de Salud Familiar"),
@@ -298,36 +322,16 @@ for a, d in abrev:
     r = p.add_run(f"{a}: "); r.bold = True; r.font.name = FONT; r.font.size = Pt(12)
     r2 = p.add_run(d); r2.font.name = FONT; r2.font.size = Pt(12)
 
-doc.add_page_break()
-heading("RESUMEN")
-para("El presente informe da cuenta del Internado en Farmacia Asistencial y Atención "
-     "Primaria de Salud realizado en la unidad de farmacia del CESFAM Villa Nonguén, "
-     "entre el 11 de mayo y el 10 de julio de 2026. Durante nueve semanas el interno se "
-     "integró al equipo de farmacia y participó en los procesos de recepción, "
-     "almacenamiento, gestión de stock, fraccionamiento, reenvasado y dispensación de "
-     "medicamentos, además de actividades de atención farmacéutica, visitas "
-     "domiciliarias y educación sanitaria orientadas al uso racional de los "
-     "medicamentos. En paralelo se desarrolló el seminario de título, consistente en el "
-     "diseño de un protocolo de atención farmacéutica domiciliaria basado en el Modelo "
-     "CMO para los pacientes del Programa de Salud Cardiovascular del centro. El informe "
-     "describe el establecimiento y su unidad de farmacia, detalla las actividades "
-     "realizadas mediante una carta Gantt y su descripción, presenta el desarrollo del "
-     "seminario de título y discute el cumplimiento de los objetivos a la luz de la "
-     "evidencia, junto con las fortalezas, debilidades y propuestas de mejora "
-     "identificadas durante la experiencia.")
-_pk = doc.add_paragraph(); _pk.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
-_pk.paragraph_format.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
-_rk = _pk.add_run("Palabras clave: "); _rk.bold = True; _rk.font.name = FONT; _rk.font.size = Pt(12)
-_rk2 = _pk.add_run("atención farmacéutica; Atención Primaria de Salud; Modelo CMO; "
-                   "adherencia; uso racional de medicamentos.")
-_rk2.font.name = FONT; _rk2.font.size = Pt(12)
-_rk2.text = cap_terms(_rk2.text)
-
 # =====================================================================
-# SECCION 3: cuerpo (arabigos)
+# SECCION 3: cuerpo (arabigos, inicia en 1 en la Introducción)
 # =====================================================================
 doc.add_section(WD_SECTION.NEW_PAGE)
 sec2 = doc.sections[2]; set_margins(sec2)
+sec2.different_first_page_header_footer = False
+sec2.header.is_linked_to_previous = False
+sec2.header.paragraphs[0].text = ""
+sec2.first_page_header.is_linked_to_previous = False
+sec2.first_page_header.paragraphs[0].text = ""
 footer_page_number(sec2); set_pgnum(sec2, fmt="decimal", start=1)
 
 # ---------------------------------------------------------- 1. INTRODUCCION
@@ -392,6 +396,16 @@ make_table(["Estamento", "N.º", "Estamento", "N.º"], [
 para("Nota: La dotación total corresponde a 122 funcionarios. Elaboración a partir de "
      "los antecedentes entregados por el establecimiento.", size=10, italic=True,
      space_after=10)
+para("Dentro de la población inscrita se reconocen grupos específicos que reflejan la "
+     "diversidad de la comunidad, como 123 personas pertenecientes a pueblos "
+     "originarios y 257 usuarios migrantes internacionales, lo que orienta una atención "
+     "con enfoque intercultural e inclusivo. El nombre del sector proviene del "
+     "mapudungun y significa agua que corre, en referencia a la relación histórica del "
+     "territorio con su entorno natural. En cuanto a su desarrollo institucional, el "
+     "centro ha consolidado la certificación del Modelo de Salud Familiar, que pasó de "
+     "un 53,6% en 2015 a un 88,14% en 2018, y ha rendido procesos de acreditación en "
+     "2017 y 2025, lo que da cuenta de un trabajo sostenido por la calidad de la "
+     "atención.")
 
 heading("1.2 Organigrama y distribución de la unidad de farmacia", level=2)
 para("La unidad de farmacia se organiza bajo la responsabilidad de un químico "
@@ -628,7 +642,9 @@ heading("2.3.2 Recepción, almacenamiento y gestión del stock", level=3)
 para("Se participó en la recepción y el almacenamiento de los medicamentos que llegan "
      "a la unidad, que se adquieren principalmente a través de la Central de "
      "Abastecimiento (CENABAST) y que se ordenan resguardando las condiciones de "
-     "conservación. Se colaboró en la gestión del stock, con especial atención al "
+     "conservación de temperatura y humedad, y aplicando el criterio FEFO, es decir, lo "
+     "primero que vence es lo primero que sale, para asegurar la rotación de las "
+     "existencias. Se colaboró en la gestión del stock, con especial atención al "
      "control de los medicamentos próximos a vencer, que se marcaban y se controlaban "
      "para evitar pérdidas. Cuando un medicamento estaba por vencer y no alcanzaba a "
      "utilizarse, se gestionaban préstamos o canjes con otros centros de la red, y las "
@@ -1088,6 +1104,19 @@ bullet("Hoja de esquema de horarios de medicación: ordena, en una tabla simple,
        "medicamento tomar y a qué hora, como apoyo para el paciente y su cuidador.")
 bullet("Protocolo de llamada telefónica: guion breve para contactar y agendar al "
        "paciente antes de la visita domiciliaria.")
+
+heading("Anexo 4. Protocolos de la unidad de farmacia consultados", level=2)
+para("Durante el internado se revisaron y aplicaron los procedimientos internos de la "
+     "unidad de farmacia del CESFAM Villa Nonguén, que sirvieron de base para las "
+     "actividades descritas en este informe.")
+bullet("APF 1.2.1 Comité de Farmacia.")
+bullet("APF 1.3.1 Rotulación de medicamentos.")
+bullet("APF 1.3.2 Envasado de medicamentos e insumos de farmacia.")
+bullet("APF 1.3.3.1 Despacho de medicamentos.")
+bullet("APF 1.4.1 Almacenamiento y conservación de medicamentos.")
+bullet("APF 13 Eliminación de medicamentos expirados, en mal estado o sin rotulación "
+       "adecuada.")
+bullet("APF 22 Manejo de psicotrópicos y estupefacientes.")
 
 doc.save("Informe de Internado - Farmacia Asistencial y APS - CESFAM Villa Nonguen.docx")
 print("Documento generado correctamente.")
