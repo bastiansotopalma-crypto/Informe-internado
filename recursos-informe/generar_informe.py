@@ -1159,6 +1159,8 @@ with zipfile.ZipFile(_OUT, "r") as zin, zipfile.ZipFile(_tmp, "w", zipfile.ZIP_D
         if it == "word/theme/theme1.xml":
             t = data.decode("utf-8")
             t = t.replace("Calibri Light", "Arial").replace("Calibri", "Arial")
+            # Protege 'Cambria Math' (fuente de ecuaciones) y cambia el resto de Cambria a Arial
+            t = t.replace("Cambria Math", "\x00MATH\x00").replace("Cambria", "Arial").replace("\x00MATH\x00", "Cambria Math")
             data = t.encode("utf-8")
         zout.writestr(it, data)
 _os.replace(_tmp, _OUT)
