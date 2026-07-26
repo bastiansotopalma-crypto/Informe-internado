@@ -37,7 +37,7 @@ ax.set_xlim(0, 16); ax.set_ylim(0, 11); ax.axis("off")
 ax.text(8, 10.5, "Organigrama de la Unidad de Farmacia", ha="center", va="center", fontsize=15, weight="bold", color=NAVY)
 ax.text(8, 10.0, "CESFAM Villa Nonguén", ha="center", va="center", fontsize=11, color=GREY, style="italic")
 rbox(ax, 8, 9.0, 6.6, 1.0, "Dirección del CESFAM Villa Nonguén", "Administración delegada, COSADES", fc=LBLUE, tsize=12)
-rbox(ax, 8, 7.1, 7.2, 1.15, "Q.F. Directora Técnica de Farmacia  |  Jennifer Vallejos",
+rbox(ax, 8, 7.1, 7.2, 1.15, "Q.F. Directora Técnica de Farmacia  |  Yeniffer Vallejos",
      "Dirección técnica, arsenal, control legal y gestión de la unidad", fc="#eaf1fa", tsize=11)
 rbox(ax, 8, 5.2, 7.2, 1.15, "Q.F. de Atención Farmacéutica  |  Fernanda Torres",
      "Atención Farmacéutica en box y visitas domiciliarias (PSCV)", fc="#eaf1fa", tsize=11)
